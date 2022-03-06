@@ -5,6 +5,7 @@
 #include <fstream>
 #include <optional>
 #include <string>
+#include "CopyFile.h"
 
 struct Args
 {
@@ -22,6 +23,19 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 	args.inputFileName = argv[1];
 	args.outputFileName = argv[2];
 	return args;
+}
+
+void CopyStreams(std::ifstream& input, std::ofstream& output)
+{
+	// Копируем содержимое входного файла в выходной 
+	char ch;
+	while (input.get(ch))
+	{
+		if (!output.put(ch))
+		{
+			break;
+		}
+	}
 }
 
 int main(int argc, char* argv[])
@@ -51,15 +65,7 @@ int main(int argc, char* argv[])
 		std::cout << "Failed to open '" << args->outputFileName << "' for writing\n";
 		return 1;
 	}
-	// Копируем содержимое входного файла в выходной 
-	char ch;
-	while (input.get(ch))
-	{
-		if (!output.put(ch))
-		{
-			break;
-		}
-	}
+	CopyStreams(input, output);
 
 	if (input.bad())
 	{
