@@ -3,11 +3,24 @@
 #include <optional>
 #include <stdexcept>
 #include <string>
+#include <cctype>
 
 struct Args
 {
 	int number;
 };
+
+bool IsNumber(std::string argvToCheck)
+{
+	for (char ch : argvToCheck)
+	{
+		if (!isdigit(ch))
+		{
+			return false;
+		}
+	}
+	return true;
+}
 
 std::optional<Args> ParseArgs(int argc, char* argv[])
 {
@@ -20,6 +33,10 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 	Args args;
 	try
 	{
+		if (!IsNumber(argv[1]))
+		{
+			throw std::invalid_argument("Argument is not number");
+		}
 		int number = std::stoi(argv[1]);
 		if (number >= 0)
 		{
@@ -34,11 +51,12 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 	catch (std::invalid_argument& e)
 	{
 		std::cout << "Invalid arguments\n"
-				  << "Usage: Dec2Bin.exe <number>\n";
+				  << "Usage: Dec2Bin.exe <number>. "
+				  << e.what()<<"\n ";
 	}
 	catch (std::out_of_range& oor)
 	{
-		std::cerr << "Out of Range error: " << oor.what() << '\n';
+		std::cout << "Out of Range error: " << oor.what() << '\n';
 	}
 	return std::nullopt;
 }
@@ -58,6 +76,10 @@ void PrintDec2Bin(std::optional<Args>& args)
 		{
 			std::cout << numberDigit;
 		}
+	}
+	if (!printDigitFlag)
+	{
+		std::cout << numberDigit;
 	}
 }
 
