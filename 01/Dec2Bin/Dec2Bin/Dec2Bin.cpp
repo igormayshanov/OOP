@@ -37,7 +37,7 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 		{
 			throw std::invalid_argument("Argument is not number");
 		}
-		int number = std::stoi(argv[1]);
+		int number = std::stol(argv[1]);
 		if (number >= 0)
 		{
 			args.number = number;
@@ -57,6 +57,7 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 	catch (std::out_of_range& oor)
 	{
 		std::cout << "Out of Range error: " << oor.what() << '\n';
+
 	}
 	return std::nullopt;
 }

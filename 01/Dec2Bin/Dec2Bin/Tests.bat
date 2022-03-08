@@ -29,8 +29,8 @@ fc MaxDigit.txt "%TEMP%\output.txt" > nul  || goto err
 echo Test 4 passed
 
 REM Enter number > max argument
- REM %MyProgram% 2147483648 && goto err
- REM echo Test 5 passed
+%MyProgram% 2147483648 && goto err
+echo Test 5 passed
 
 REM Тесты прошли успешно
 echo All tests passed successfuly
