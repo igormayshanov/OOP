@@ -62,6 +62,8 @@ std::optional<WrappedMatrix3x3> ReadFileInMatrix(std::string fileName)
 	{
 		if (i >= MATRIX_SIZE)
 		{
+			std::cout << "Invalid matrix in file: " << fileName << "\n";
+			std::cout << "Matrix size should be 3*3\n";
 			return std::nullopt;
 		}
 		getline(input, s);
@@ -72,6 +74,8 @@ std::optional<WrappedMatrix3x3> ReadFileInMatrix(std::string fileName)
 		{
 			if (j >= MATRIX_SIZE)
 			{
+				std::cout << "Invalid matrix in file: " << fileName << "\n";
+				std::cout << "Matrix size should be 3*3\n";
 				return std::nullopt;
 			}
 			else
@@ -93,11 +97,11 @@ std::optional<WrappedMatrix3x3> ReadFileInMatrix(std::string fileName)
 WrappedMatrix3x3 MultMatrix(WrappedMatrix3x3 matrix1, WrappedMatrix3x3 matrix2)
 {
 	WrappedMatrix3x3 resultMatrix = {};
-	for (int i=0; i<MATRIX_SIZE; i++)
+	for (int i = 0; i < MATRIX_SIZE; i++)
 	{
-		for (int j=0; j<MATRIX_SIZE; j++)
+		for (int j = 0; j < MATRIX_SIZE; j++)
 		{
-			for (int r=0; r<MATRIX_SIZE; r++)
+			for (int r = 0; r < MATRIX_SIZE; r++)
 			{
 				resultMatrix.items[i][j] += matrix1.items[i][r] * matrix2.items[r][j];
 			}
@@ -120,15 +124,11 @@ int main(int argc, char* argv[])
 	auto matrix1 = ReadFileInMatrix(args->inputFileName1);
 	if (!matrix1)
 	{
-		std::cout << "Invalid matrix size\n";
-		std::cout << "Matrix size should be 3*3\n";
 		return 1;
 	}
 	auto matrix2 = ReadFileInMatrix(args->inputFileName2);
 	if (!matrix2)
 	{
-		std::cout << "Invalid matrix size\n";
-		std::cout << "Matrix size should be 3*3\n";
 		return 1;
 	}
 
