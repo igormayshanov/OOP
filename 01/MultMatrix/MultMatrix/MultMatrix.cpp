@@ -38,7 +38,10 @@ void PrintMatrix(Matrix3x3 matr)
 	{
 		for (int j = 0; j < MATRIX_SIZE; j++)
 		{
-			std::cout << matr[i][j] << " ";
+			std::cout.width(15);
+			std::cout.setf(std::ios::fixed);
+			std::cout.precision(3);
+			std::cout << matr[i][j];
 		}
 		std::cout << "\n";
 	}
@@ -46,7 +49,6 @@ void PrintMatrix(Matrix3x3 matr)
 
 std::optional<WrappedMatrix3x3> ReadFileInMatrix(std::string fileName)
 {
-	// Открываем входной файл
 	std::ifstream input;
 	input.open(fileName);
 	if (!input.is_open())
@@ -60,22 +62,30 @@ std::optional<WrappedMatrix3x3> ReadFileInMatrix(std::string fileName)
 	int i = 0;
 	while (!input.eof())
 	{
+		
 		if (i >= MATRIX_SIZE)
 		{
-			std::cout << "Invalid matrix in file: " << fileName << "\n";
-			std::cout << "Matrix size should be 3*3\n";
 			return std::nullopt;
 		}
 		getline(input, s);
 		std::stringstream ss;
 		ss.str(s);
 		int j = 0;
-		while (ss >> matrixCoefficient)
+		while (!ss.eof())
 		{
+			ss >> matrixCoefficient;
+			if (ss.fail())
+			{
+				std::cout << "Invalid matrix in file ss >> matrixCoef\n";
+				return std::nullopt;
+			}
+			/*if (!(ss >> matrixCoefficient))
+			{
+				std::cout << "Invalid matrix in file ss >> matrixCoef\n";
+				return std::nullopt;
+			}*/
 			if (j >= MATRIX_SIZE)
 			{
-				std::cout << "Invalid matrix in file: " << fileName << "\n";
-				std::cout << "Matrix size should be 3*3\n";
 				return std::nullopt;
 			}
 			else
@@ -84,6 +94,7 @@ std::optional<WrappedMatrix3x3> ReadFileInMatrix(std::string fileName)
 			}
 			j++;
 		}
+		
 		i++;
 	}
 	if (input.bad())
@@ -113,8 +124,6 @@ WrappedMatrix3x3 MultMatrix(WrappedMatrix3x3 matrix1, WrappedMatrix3x3 matrix2)
 int main(int argc, char* argv[])
 {
 	auto args = ParseArgs(argc, argv);
-
-	// Проверка правильности аргументов входной строки
 	if (!args)
 	{
 		std::cout << "Invalid arguments count\n";
@@ -124,11 +133,15 @@ int main(int argc, char* argv[])
 	auto matrix1 = ReadFileInMatrix(args->inputFileName1);
 	if (!matrix1)
 	{
+		std::cout << "Invalid matrix in file\n";
+		std::cout << "Matrix size should be 3*3 and contain only numbers\n";
 		return 1;
 	}
 	auto matrix2 = ReadFileInMatrix(args->inputFileName2);
 	if (!matrix2)
 	{
+		std::cout << "Invalid matrix in file\n";
+		std::cout << "Matrix size should be 3*3 and contain only numbers\n";
 		return 1;
 	}
 

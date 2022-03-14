@@ -5,6 +5,7 @@
 #include <string>
 #include <cctype>
 
+//2. Кажется излишним
 struct Args
 {
 	int number;
@@ -26,6 +27,7 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 {
 	if (argc != 2)
 	{
+		//1. стоит подумать как избавиться от побочных ответственностей
 		std::cout << "Invalid argument count\n"
 				  << "Usage: Dec2Bin.exe <number>\n";
 		return std::nullopt;
@@ -35,9 +37,10 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 	{
 		if (!IsNumber(argv[1]))
 		{
+			//3. странно что в одном месте используется исключение, в другом просто вывод в поток
 			throw std::invalid_argument("Argument is not number");
 		}
-		int number = std::stol(argv[1]);
+		int number = std::stoi(argv[1]);
 		if (number >= 0)
 		{
 			args.number = number;
@@ -45,27 +48,30 @@ std::optional<Args> ParseArgs(int argc, char* argv[])
 		}
 		else
 		{
-			std::cout << "Invalid argument " << number << ". Entered number is less than 0\n";
+			throw std::invalid_argument ("Entered number is less than 0");
 		}
 	}
 	catch (std::invalid_argument& e)
 	{
+		//1. разобраться с выводами, не стоит мешать с логикой
 		std::cout << "Invalid arguments\n"
 				  << "Usage: Dec2Bin.exe <number>. "
 				  << e.what()<<"\n ";
 	}
-	catch (std::out_of_range& oor)
+	catch (std::logic_error& err)
 	{
-		std::cout << "Out of Range error: " << oor.what() << '\n';
+		std::cout << "Error, incorrect data: " << err.what() << '\n';
 
 	}
 	return std::nullopt;
 }
 
+// проверка на nullopt была, может можно передавать уже Args?
 void PrintDec2Bin(std::optional<Args>& args)
 {
 	bool printDigitFlag = false;
 	short numberDigit;
+	//magic num 31
 	for (int i = 31; i >= 0; i--)
 	{
 		numberDigit = ((args->number >> i) & 0b1);
@@ -75,6 +81,7 @@ void PrintDec2Bin(std::optional<Args>& args)
 		}
 		if (printDigitFlag)
 		{
+			//3 Нужно разделить логику и вывод
 			std::cout << numberDigit;
 		}
 	}

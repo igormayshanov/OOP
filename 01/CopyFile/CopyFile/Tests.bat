@@ -1,9 +1,9 @@
-@echo off
+п»ї@echo off
 
-REM Путь к тестируемой программе передается через 1-й аргумент командной строки
+REM РџСѓС‚СЊ Рє С‚РµСЃС‚РёСЂСѓРµРјРѕР№ РїСЂРѕРіСЂР°РјРјРµ РїРµСЂРµРґР°РµС‚СЃСЏ С‡РµСЂРµР· 1-Р№ Р°СЂРіСѓРјРµРЅС‚ РєРѕРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё
 SET MyProgram="%~1"
 
-REM Защита запуска без аргумента, задающего путь к программе
+REM Р—Р°С‰РёС‚Р° Р·Р°РїСѓСЃРєР° Р±РµР· Р°СЂРіСѓРјРµРЅС‚Р°, Р·Р°РґР°СЋС‰РµРіРѕ РїСѓС‚СЊ Рє РїСЂРѕРіСЂР°РјРјРµ
 if %MyProgram%=="" (
 	echo Please specify path to program
 	exit /B 1
@@ -23,19 +23,19 @@ REM Copy missing file should fail
 %MyProgram% MissingFile.txt "%TEMP%\output.txt" && goto err
 echo Test 3 passed
 
-REM Is output file is not specfied, program mast fail
+REM Is output file is not specified, program mast fail
 %MyProgram% MissingFile.txt && goto err
 echo Test 4 passed
 
-REM Is input and output file are not specfied, program mast fail
+REM Is input and output file are not specified, program mast fail
 %MyProgram% && goto err
 echo Test 5 passed
 
-REM Тесты прошли успешно
+REM РўРµСЃС‚С‹ РїСЂРѕС€Р»Рё СѓСЃРїРµС€РЅРѕ
 echo All tests passed successfuly
 exit /B 0
 
-REM Сюда будем попадать в случае ошибки
+REM РЎСЋРґР° Р±СѓРґРµРј РїРѕРїР°РґР°С‚СЊ РІ СЃР»СѓС‡Р°Рµ РѕС€РёР±РєРё
 :err
 echo Test failed
 exit /B 1 
