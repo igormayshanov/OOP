@@ -22,12 +22,14 @@
   <ItemGroup>
     <Text Include="matrix1.txt" />
     <Text Include="matrix2.txt" />
-    <Text Include="EmptyMatrix.txt" />
+    <Text Include="EmptyFile.txt" />
     <Text Include="Matrix2x2.txt" />
     <Text Include="Matrix4x4.txt" />
     <Text Include="NullMatrix.txt" />
     <Text Include="MatrixWithNotNumberCoeffic.txt" />
     <Text Include="ResultMultMatrix.txt" />
+    <Text Include="ResultMatrix2x2.txt" />
+    <Text Include="MultNullMatrixResult.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Tests.bat">

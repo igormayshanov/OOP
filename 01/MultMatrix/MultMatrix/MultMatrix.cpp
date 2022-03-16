@@ -38,10 +38,9 @@ void PrintMatrix(Matrix3x3 matr)
 	{
 		for (int j = 0; j < MATRIX_SIZE; j++)
 		{
-			std::cout.width(15);
 			std::cout.setf(std::ios::fixed);
 			std::cout.precision(3);
-			std::cout << matr[i][j];
+			std::cout << matr[i][j] << " ";
 		}
 		std::cout << "\n";
 	}
@@ -76,14 +75,8 @@ std::optional<WrappedMatrix3x3> ReadFileInMatrix(std::string fileName)
 			ss >> matrixCoefficient;
 			if (ss.fail())
 			{
-				std::cout << "Invalid matrix in file ss >> matrixCoef\n";
 				return std::nullopt;
 			}
-			/*if (!(ss >> matrixCoefficient))
-			{
-				std::cout << "Invalid matrix in file ss >> matrixCoef\n";
-				return std::nullopt;
-			}*/
 			if (j >= MATRIX_SIZE)
 			{
 				return std::nullopt;
@@ -93,8 +86,7 @@ std::optional<WrappedMatrix3x3> ReadFileInMatrix(std::string fileName)
 				wrappedMat.items[i][j] = matrixCoefficient;
 			}
 			j++;
-		}
-		
+		}	
 		i++;
 	}
 	if (input.bad())
@@ -145,8 +137,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	PrintMatrix(matrix1->items);
-	PrintMatrix(matrix2->items);
+		//PrintMatrix(matrix2->items);
 
 	WrappedMatrix3x3 multMatrix = MultMatrix(*matrix1, *matrix2);
 	PrintMatrix(multMatrix.items);

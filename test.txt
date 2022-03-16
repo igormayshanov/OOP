@@ -1,0 +1,1 @@
+"$(ProjectDir)Tests.bat" "$(TargetPath)"
