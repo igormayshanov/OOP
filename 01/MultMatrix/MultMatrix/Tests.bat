@@ -19,8 +19,7 @@ fc ResultMultMatrix.txt "%TEMP%\output.txt" > nul  || goto err
 echo Test 2 passed
 
 REM enter a smaller matrix
-%MyProgram% "matrix1.txt" "matrix2x2.txt" > "%TEMP%\output.txt" || goto err
-fc ResultMatrix2x2.txt "%TEMP%\output.txt" > nul  || goto err
+%MyProgram% "matrix1.txt" "matrix2x2.txt" && goto err
 echo Test 3 passed
 
 REM enter a bigger matrix
