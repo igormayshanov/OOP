@@ -15,15 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Task1var7.cpp">
+    <ClCompile Include="StringReverser.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="HandleVector.cpp">
+    <ClCompile Include="Reverse.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HandleVector.h">
+    <ClInclude Include="Reverse.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

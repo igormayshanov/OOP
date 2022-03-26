@@ -1,5 +1,4 @@
-﻿
-#include <fstream>
+﻿#include <fstream>
 #include <iostream>
 #include <optional>
 #include <sstream>
@@ -94,7 +93,7 @@ std::optional<std::ifstream> OpenFile(std::string fileName)
 	}
 }
 
-std::optional<WrappedMatrix3x3> GetMatrixFromInput(std::ifstream& input)
+std::optional<WrappedMatrix3x3> FillMatrixFromInput(std::ifstream& input)
 {
 	// 4. попробуй декомпозировать
 	WrappedMatrix3x3 wrappedMat = {};
