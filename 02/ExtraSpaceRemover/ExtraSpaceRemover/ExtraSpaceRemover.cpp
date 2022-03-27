@@ -1,8 +1,4 @@
-﻿#include <algorithm>
-#include <iostream>
-#include <iterator>
-#include <string>
-
+﻿#include <iostream>
 #include "RemoveExtraSpaces.h"
 
 using namespace std;
