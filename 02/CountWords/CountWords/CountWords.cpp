@@ -1,8 +1,5 @@
-﻿#include <algorithm>
-#include <iostream>
+﻿#include <iostream>
 #include <map>
-#include <string>
-#include <sstream>
 #include <Windows.h>
 #include "CountWordsFunctions.h"
 
@@ -17,7 +14,7 @@ int main()
 	map<string, unsigned int> words;
 	while (getline(cin, line))
 	{
-		words = CountWords(words, line);
+		words = CountWordsInLines(words, line);
 	}
 	PrintMap(words);
 }
