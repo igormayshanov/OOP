@@ -2,31 +2,45 @@
 #include <string>
 #include <vector>
 #include <sstream>
+
+#include "ObscenWordsFilterFunctions.h"
+#include "OpenFile.h"
+#include "ParseArgs.h"
+
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
+	const string DELIMETR = " ';,.:!?";
+
+	auto inputFileName = ParseArgs(argc, argv);
+	if (!inputFileName)
+	{
+		cout << "Invalid argument count\n";
+		cout << "Usage: ObsceneWordsFilter.exe <inputFileName>\n";
+		return 1;
+	}
+	auto inputFile = OpenFile(*inputFileName);
+	if (!inputFile)
+	{
+		cout << "Filed to open '" << *inputFileName << "' for reading\n";
+		return 1;
+	}
+
+
 	cout << "Enter the line:\n";
 	string inputString;
 	getline(cin, inputString);
-	std::stringstream stringStream;
+	stringstream stringStream;
 	stringStream.str(inputString);
 	cout << inputString << "\n";
-	std::string line;
+	string line;
+	string word;
 	vector<string> wordVector;
-	string delimetr = " ';,:";
 	while (stringStream >> line)
 	{
-		cout << "output " << line << "\n";
-		std::size_t prev = 0, pos;
-		while ((pos = line.find_first_of(delimetr, prev)) != std::string::npos)
-		{
-			if (pos > prev)
-				wordVector.push_back(line.substr(prev, pos - prev));
-			prev = pos + 1;
-		}
-		if (prev < line.length())
-			wordVector.push_back(line.substr(prev, std::string::npos));
+		word = FindWord(line, DELIMETR);
+		wordVector.push_back(word);
 	}
 	for (auto& i : wordVector)
 	{

@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
 		std::cout << "Failed to open '" << args->inputFileName1 << "' for reading\n";
 		return 1;
 	}
-	auto matrix1 = GetMatrixFromInput(*inputFile1);
+	auto matrix1 = FillMatrixFromInput(*inputFile1);
 	if (!matrix1)
 	{
 		std::cout << "Invalid matrix in file\n";
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 		std::cout << "Failed to open '" << args->inputFileName2 << "' for reading\n";
 		return 1;
 	}
-	auto matrix2 = GetMatrixFromInput(*inputFile2);
+	auto matrix2 = FillMatrixFromInput(*inputFile2);
 	if (!matrix2)
 	{
 		std::cout << "Invalid matrix in file\n";
