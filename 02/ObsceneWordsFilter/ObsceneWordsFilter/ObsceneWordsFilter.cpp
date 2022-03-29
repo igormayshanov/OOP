@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, "Russian");
-	SetConsoleCP(1251);
+	SetConsoleCP(65001);
 	const string DELIMETR = " ';,.:!?";
 
 	auto inputFileName = ParseArgs(argc, argv);
@@ -30,19 +30,18 @@ int main(int argc, char* argv[])
 		cout << "Filed to open '" << *inputFileName << "' for reading\n";
 		return 1;
 	}
-
 	set<string> obsceneWords = FillSetFromFile(*inputFile);
 	for (auto& i : obsceneWords)
 	{
 		cout << i << "\n";
 	}
 	cout << "Enter the line:\n";
-	string inputString;
-	string outputString;
-	getline(cin, inputString);
-	stringstream stringStream;
-	stringStream.str(inputString);
-	cout << inputString << "\n";
+	string inputLine;
+	string outputLine;
+	getline(cin, inputLine);
+	string workingLine = inputLine;
+	stringstream stringStream(inputLine);
+	cout << inputLine << "\n";
 	string line;
 	vector<string> wordVector;
 	while (stringStream >> line)
@@ -59,9 +58,13 @@ int main(int argc, char* argv[])
 			}
 			cout << "wordAfterDelim " << wordAfterDelim << "\n";
 			wordBeginPos = delimetrPos + 1;
-			if (obsceneWords.find(wordAfterDelim) != obsceneWords.end())
+			if (FindObsceneWordInSet(obsceneWords, wordAfterDelim))
 			{
-				outputString = inputString.erase(inputString.find(wordAfterDelim), wordAfterDelim.length());
+				outputLine = EraseWordFromInputLine(workingLine, wordAfterDelim);
+			}
+			else
+			{
+				outputLine = workingLine;
 			}
 		}
 		if (wordBeginPos < line.length())
@@ -69,13 +72,17 @@ int main(int argc, char* argv[])
 			wordBeforDelim = line.substr(wordBeginPos, std::string::npos);
 		}
 		cout << "wordBeforDelim " << wordBeforDelim << "\n";
-		if (obsceneWords.find(wordBeforDelim) != obsceneWords.end())
+		if (FindObsceneWordInSet(obsceneWords, wordBeforDelim))
 		{
-			outputString = inputString.erase(inputString.find(wordBeforDelim), wordBeforDelim.length());
+			outputLine = EraseWordFromInputLine(workingLine, wordBeforDelim);
+		}
+		else
+		{
+			outputLine = workingLine;
 		}
 	}
 	cout << "Print input string without obscene words: \n";
-	cout << outputString << "\n";
+	cout << outputLine << "\n";
 	for (auto& i : wordVector)
 	{
 		cout << i << "\n";

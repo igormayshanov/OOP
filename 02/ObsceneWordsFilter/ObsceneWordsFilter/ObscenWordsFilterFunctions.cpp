@@ -36,3 +36,20 @@ std::set<std::string> FillSetFromFile(std::ifstream& inputFile)
 	}
 	return words;
 }
+
+bool FindObsceneWordInSet(std::set<std::string> const& inputMap, std::string const& word)
+{
+	if (inputMap.find(word) != inputMap.end())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+std::string EraseWordFromInputLine(std::string& inputLine, std::string const& word)
+{
+	return inputLine.erase(inputLine.find(word), word.length());
+}
