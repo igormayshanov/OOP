@@ -2,25 +2,6 @@
 #include <sstream>
 #include "ObscenWordsFilterFunctions.h"
 
-std::string FindWord(std::string& str, std::string const& delimetr)
-{
-	std::string word;
-	std::size_t pos;
-	std::size_t previos = 0;
-	while ((pos = str.find_first_of(delimetr, previos)) != std::string::npos)
-	{
-		if (pos > previos)
-		{
-			return word = str.substr(previos, pos - previos);
-		}
-		previos = pos + 1;
-	}
-	if (previos < str.length())
-	{
-		return word = str.substr(previos, std::string::npos);
-	}
-}
-
 std::set<std::string> FillSetFromFile(std::ifstream& inputFile) 
 {
 	std::set<std::string> words;
@@ -37,9 +18,9 @@ std::set<std::string> FillSetFromFile(std::ifstream& inputFile)
 	return words;
 }
 
-bool FindObsceneWordInSet(std::set<std::string> const& inputMap, std::string const& word)
+bool FindObsceneWordInSet(std::set<std::string> const& inputSet, std::string const& word)
 {
-	if (inputMap.find(word) != inputMap.end())
+	if (inputSet.find(word) != inputSet.end())
 	{
 		return true;
 	}
@@ -52,4 +33,47 @@ bool FindObsceneWordInSet(std::set<std::string> const& inputMap, std::string con
 std::string EraseWordFromInputLine(std::string& inputLine, std::string const& word)
 {
 	return inputLine.erase(inputLine.find(word), word.length());
+}
+
+std::string FindAndEraseObsceneWord(std::set<std::string> const& inputSet, std::string& inputLine, std::string const& DELIMETR)
+{
+	std::stringstream stringStream(inputLine);
+	std::string outputLine;
+	std::string line;
+	while (stringStream >> line)
+	{
+		size_t wordBeginPos = 0;
+		size_t delimetrPos;
+		std::string wordBeforDelim;
+		std::string wordAfterDelim;
+		while ((delimetrPos = line.find_first_of(DELIMETR, wordBeginPos)) != std::string::npos)
+		{
+			if (delimetrPos > wordBeginPos)
+			{
+				wordAfterDelim = line.substr(wordBeginPos, delimetrPos - wordBeginPos);
+			}
+			wordBeginPos = delimetrPos + 1;
+			if (FindObsceneWordInSet(inputSet, wordAfterDelim))
+			{
+				outputLine = EraseWordFromInputLine(inputLine, wordAfterDelim);
+			}
+			else
+			{
+				outputLine = inputLine;
+			}
+		}
+		if (wordBeginPos < line.length())
+		{
+			wordBeforDelim = line.substr(wordBeginPos, std::string::npos);
+		}
+		if (FindObsceneWordInSet(inputSet, wordBeforDelim))
+		{
+			outputLine = EraseWordFromInputLine(inputLine, wordBeforDelim);
+		}
+		else
+		{
+			outputLine = inputLine;
+		}
+	}
+	return outputLine;
 }

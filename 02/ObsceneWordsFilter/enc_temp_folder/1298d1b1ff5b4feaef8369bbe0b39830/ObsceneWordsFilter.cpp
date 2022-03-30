@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, "Russian");
 	SetConsoleCP(1251);
-	const std::string DELIMETR = " +-=#*{}[]<>()';,.:!?&@\t\"";
+	const std::string DELIMETR = " +-=#*{}[]<>()';,.:!?&@\t\"\"";
 	auto inputFileName = ParseArgs(argc, argv);
 	if (!inputFileName)
 	{
