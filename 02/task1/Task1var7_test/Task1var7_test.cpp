@@ -53,29 +53,28 @@ SCENARIO("CalculateSumOfMinElements")
 {
 	WHEN("input vector is empty")
 	{
-		std::vector<float> input = {0, 0, 0};
-		float sum = 0;
+		std::vector<float> input = {};
 		THEN("sum is equal null")
 		{
-			sum = CalculateSumOfMinElements(input, 3) == 0;
+			CHECK(CalculateSumOfMinElements(input, 0) == 0);
 		}
 	}
 	WHEN("input vector contain one number")
 	{
 		std::vector<float> input = {1};
-		float sum = 0;
+		float result = 1;
 		THEN("sum is equal to the number itself")
 		{
-			sum = CalculateSumOfMinElements(input, 1) == 1;
+			CHECK(CalculateSumOfMinElements(input, 1) == result);
 		}
 	}
 	WHEN("input vector contain several numbers")
 	{
 		std::vector<float> input = { 1.1, 2.2, 3.3, 4.4 };
-		float sum = 0;
-		THEN("sum = 6.6")
+		float result = 6.6;
+		THEN("sum == 6.6")
 		{
-			sum = CalculateSumOfMinElements(input, 3) == 6.6;
+			CHECK(CalculateSumOfMinElements(input, 3) == result);
 		}
 	}
 }
@@ -85,36 +84,33 @@ SCENARIO("AddNumberToVectorElements")
 	WHEN("input vector is empty and added number = 0")
 	{
 		std::vector<float> input = {};
-		float sum = 0;
-		std::vector<float> output = {};
+		float number = 0;
 		THEN("output vector is empty")
 		{
-			output = AddNumberToVectorElements(input, sum);
-			output.empty();
+			AddNumberToVectorElements(input, number);
+			CHECK(input.empty());
 		}
 	}
 	WHEN("input vector contain 1 number")
 	{
 		std::vector<float> input = {1.1};
-		float sum = 2.1;
-		std::vector<float> correctOutput = { input[0] + sum };
-		std::vector<float> output;
+		float number = 2.1;
+		std::vector<float> correctOutput = {3.2};
 		THEN("output vector {3.2}")
 		{
-			output = AddNumberToVectorElements(input, sum);
-			output == correctOutput;
+			AddNumberToVectorElements(input, number);
+			CHECK(input == correctOutput);
 		}
 	}
 	WHEN("input vector contain several numbers")
 	{
 		std::vector<float> input = { 1.1, 1.1, 1.1 };
-		float sum = 2;
-		std::vector<float> correctOutput = { input[0] + sum, input[1] + sum, input[2] + sum };
-		std::vector<float> output;
+		float number = 2;
+		std::vector<float> correctOutput = { 3.1, 3.1, 3.1 };
 		THEN("output vector {3.1, 3.1, 3.1}")
 		{
-			output = AddNumberToVectorElements(input, sum);
-			output == correctOutput;
+			AddNumberToVectorElements(input, number);
+			CHECK(input == correctOutput);
 		}
 	}
 }

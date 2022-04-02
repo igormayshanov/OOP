@@ -46,12 +46,10 @@ float CalculateSumOfMinElements(std::vector<float>& inputVector, int numsOfMin)
 }
 
 // 2. либо исправить название, либо (более дорогой вариант) добавить в параметры функцию которая будет бра функциональность по суммированию
-std::vector<float> AddNumberToVectorElements(std::vector<float>& inputVector, float sum)
+void AddNumberToVectorElements(std::vector<float>& inputVector, float sum)
 {
-	std::vector<float> resultVector = inputVector;
-	for (auto& i : resultVector)
+	for (auto& i : inputVector)
 	{
 		i += sum;
 	}
-	return resultVector;
 }

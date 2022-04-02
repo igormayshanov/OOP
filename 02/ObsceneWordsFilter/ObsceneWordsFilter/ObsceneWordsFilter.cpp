@@ -15,7 +15,14 @@ int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, "Russian");
 	SetConsoleCP(1251);
-	const std::string DELIMETR = " +-=#*{}[]<>()';,.:!?&@\t\"";
+	const std::string DELIMETR = "\" +-=#*{}[]<>()';,.:!?&@\t";
+	std::unordered_set<char> delimetrs = { '\"', '+', '-', '=', '#', '*', '\\', '{', '}', '(', ')', '[', ']', '\'', ':', ';',
+	',', '.' };
+	for (auto& i:delimetrs)
+	{
+		cout << i << ", ";
+	}
+	cout << "\n";
 	auto inputFileName = ParseArgs(argc, argv);
 	if (!inputFileName)
 	{
@@ -38,5 +45,8 @@ int main(int argc, char* argv[])
 	string inputLine;
 	getline(cin, inputLine);
 	string workingLine = inputLine;
-	cout << FindAndEraseObsceneWord(obsceneWords, workingLine, DELIMETR) << "\n";
+	//подумай над названием
+
+	//cout << FindAndEraseObsceneWord(obsceneWords, workingLine, DELIMETR) << "\n";
+	cout << FilterObsceneWord(obsceneWords, workingLine, delimetrs) << "\n";
 }

@@ -23,22 +23,21 @@ int main()
 	}
 
 	std::vector<float> originVector = *sourceVector;
-	std::vector<float> resultVector;
 	float sum = 0;
 	if (originVector.size() >= numsOfMin)
 	{
 		sum = CalculateSumOfMinElements(originVector, numsOfMin);
-		resultVector = AddNumberToVectorElements(originVector, sum);
+		AddNumberToVectorElements(originVector, sum);
 	}
 	else
 	{
 		std::cout << "Error, less than " << numsOfMin << " numbers entered\n";
 		return 1;
 	}	
-	sort(resultVector.begin(), resultVector.end());
+	sort(originVector.begin(), originVector.end());
 	cout.setf(std::ios::fixed);
 	cout.precision(3);
-	copy(resultVector.begin(), resultVector.end(), ostream_iterator<float>(cout, " "));
+	copy(originVector.begin(), originVector.end(), ostream_iterator<float>(cout, " "));
 	return 0;
 }
 

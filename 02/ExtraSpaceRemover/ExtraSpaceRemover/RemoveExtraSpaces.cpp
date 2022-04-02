@@ -5,6 +5,7 @@
 
 std::string RemoveExtraSpaces(std::string const& str)
 {
+	//1. 
 	if (!str.empty())
 	{
 		std::string outputStr;

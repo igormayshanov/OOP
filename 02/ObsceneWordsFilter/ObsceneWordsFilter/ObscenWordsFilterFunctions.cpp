@@ -18,16 +18,11 @@ std::set<std::string> FillSetFromFile(std::ifstream& inputFile)
 	return words;
 }
 
-bool FindObsceneWordInSet(std::set<std::string> const& inputSet, std::string const& word)
+//больше подходит слово contains
+bool IsObsceneWord(std::set<std::string> const& inputSet, std::string const& word)
 {
-	if (inputSet.find(word) != inputSet.end())
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	//пожно упростить
+	return (inputSet.find(word) != inputSet.end());
 }
 
 std::string EraseWordFromInputLine(std::string& inputLine, std::string const& word)
@@ -35,6 +30,8 @@ std::string EraseWordFromInputLine(std::string& inputLine, std::string const& wo
 	return inputLine.erase(inputLine.find(word), word.length());
 }
 
+// для хранения делиметров оптимальнее использовать set
+//алгоритм мудреный, можно придумать проще. Подумай про string.append()
 std::string FindAndEraseObsceneWord(std::set<std::string> const& inputSet, std::string& inputLine, std::string const& DELIMETR)
 {
 	std::stringstream stringStream(inputLine);
@@ -46,14 +43,16 @@ std::string FindAndEraseObsceneWord(std::set<std::string> const& inputSet, std::
 		size_t delimetrPos;
 		std::string wordBeforDelim;
 		std::string wordAfterDelim;
-		while ((delimetrPos = line.find_first_of(DELIMETR, wordBeginPos)) != std::string::npos)
+		delimetrPos = line.find_first_of(DELIMETR, wordBeginPos);
+		while (delimetrPos != std::string::npos)
 		{
+			std::cout << "delimetrPos " << delimetrPos << "\n";
 			if (delimetrPos > wordBeginPos)
 			{
 				wordAfterDelim = line.substr(wordBeginPos, delimetrPos - wordBeginPos);
 			}
 			wordBeginPos = delimetrPos + 1;
-			if (FindObsceneWordInSet(inputSet, wordAfterDelim))
+			if (IsObsceneWord(inputSet, wordAfterDelim))
 			{
 				outputLine = EraseWordFromInputLine(inputLine, wordAfterDelim);
 			}
@@ -66,7 +65,7 @@ std::string FindAndEraseObsceneWord(std::set<std::string> const& inputSet, std::
 		{
 			wordBeforDelim = line.substr(wordBeginPos, std::string::npos);
 		}
-		if (FindObsceneWordInSet(inputSet, wordBeforDelim))
+		if (IsObsceneWord(inputSet, wordBeforDelim))
 		{
 			outputLine = EraseWordFromInputLine(inputLine, wordBeforDelim);
 		}
@@ -76,4 +75,43 @@ std::string FindAndEraseObsceneWord(std::set<std::string> const& inputSet, std::
 		}
 	}
 	return outputLine;
+}
+
+
+//Второй вариант поиска слов
+std::string FilterObsceneWord(std::set<std::string> const& obsceneWords, std::string& inputLine, std::unordered_set<char> const& delimetrs)
+{
+	std::stringstream stringStream(inputLine);
+	std::string outputLine;
+	std::string line;
+	while (stringStream >> line)
+	{
+		size_t wordBeginPos = 0;
+		size_t delimetrPos;
+		std::string word;
+		std::string wordAfterDelim;
+		for (auto& ch : line)
+		{
+			std::cout << "ch: " << ch << "\n";
+			if (delimetrs.find(ch) == delimetrs.end() && ch != '\n')
+			{
+				std::cout << "ch not delimetr: " << ch << "\n";
+				word.append(1, ch);
+			}
+			else
+			{
+				std::cout << "word: " << word << "\n";
+				if (IsObsceneWord(obsceneWords, word))
+				{
+					outputLine = EraseWordFromInputLine(inputLine, word);
+				}
+				else
+				{
+					outputLine = inputLine;
+				}
+				word.clear();
+			}
+		}
+		return outputLine;
+	}
 }

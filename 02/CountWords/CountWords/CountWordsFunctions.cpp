@@ -6,10 +6,12 @@
 
 #include "CountWordsFunctions.h"
 
-std::map<std::string, unsigned> FillMapOrCountWord(std::map<std::string, unsigned int> const& inputMap, std::string word)
+std::map<std::string, unsigned> FillMapAndCountWords(std::map<std::string, unsigned int> const& inputMap, std::string word)
 {
 	std::map<std::string, unsigned int> words = inputMap;
 	std::map<std::string, unsigned int>::iterator it;
+	if (!word.empty())
+	{
 		std::transform(word.begin(), word.end(), word.begin(), ::tolower);
 		it = words.find(word);
 		if (it == words.end())
@@ -20,18 +22,21 @@ std::map<std::string, unsigned> FillMapOrCountWord(std::map<std::string, unsigne
 		{
 			it->second++;
 		}
-	return words;
+		return words;
+	}
+	else
+	{
+		return {};
+	}
 }
 
-std::map<std::string, unsigned int> CountWordsInLines(std::map<std::string, unsigned int> const& inputMap, std::string line)
+void CountWordsInLines(std::map<std::string, unsigned int> &  words, std::string line)
 {
-	std::map<std::string, unsigned int> words = inputMap;
 	std::string word;
-	std::stringstream stringStream;
-	stringStream.str(line);
+	std::stringstream stringStream(line);
 	while (stringStream >> word)
 	{
-		words = FillMapOrCountWord(words, word);
+		words = FillMapAndCountWords(words, word);
 	}
 	return words;
 }
