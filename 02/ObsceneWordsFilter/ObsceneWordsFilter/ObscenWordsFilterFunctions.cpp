@@ -25,9 +25,9 @@ bool IsObsceneWord(std::set<std::string> const& inputSet, std::string const& wor
 	return (inputSet.find(word) != inputSet.end());
 }
 
-std::string EraseWordFromInputLine(std::string& inputLine, std::string const& word)
+std::string EraseWordFromString(std::string& str, std::string const& word)
 {
-	return inputLine.erase(inputLine.find(word), word.length());
+	return str.erase(str.find(word), word.length());
 }
 
 // для хранения делиметров оптимальнее использовать set
@@ -54,7 +54,7 @@ std::string FindAndEraseObsceneWord(std::set<std::string> const& inputSet, std::
 			wordBeginPos = delimetrPos + 1;
 			if (IsObsceneWord(inputSet, wordAfterDelim))
 			{
-				outputLine = EraseWordFromInputLine(inputLine, wordAfterDelim);
+				outputLine = EraseWordFromString(inputLine, wordAfterDelim);
 			}
 			else
 			{
@@ -67,7 +67,7 @@ std::string FindAndEraseObsceneWord(std::set<std::string> const& inputSet, std::
 		}
 		if (IsObsceneWord(inputSet, wordBeforDelim))
 		{
-			outputLine = EraseWordFromInputLine(inputLine, wordBeforDelim);
+			outputLine = EraseWordFromString(inputLine, wordBeforDelim);
 		}
 		else
 		{
@@ -81,37 +81,27 @@ std::string FindAndEraseObsceneWord(std::set<std::string> const& inputSet, std::
 //Второй вариант поиска слов
 std::string FilterObsceneWord(std::set<std::string> const& obsceneWords, std::string& inputLine, std::unordered_set<char> const& delimetrs)
 {
-	std::stringstream stringStream(inputLine);
-	std::string outputLine;
-	std::string line;
-	while (stringStream >> line)
+	std::string word;
+	std::string outputLine = inputLine;
+	for (auto& ch : inputLine)
 	{
-		size_t wordBeginPos = 0;
-		size_t delimetrPos;
-		std::string word;
-		std::string wordAfterDelim;
-		for (auto& ch : line)
+		if (delimetrs.find(ch) == delimetrs.end())
 		{
-			std::cout << "ch: " << ch << "\n";
-			if (delimetrs.find(ch) == delimetrs.end() && ch != '\n')
-			{
-				std::cout << "ch not delimetr: " << ch << "\n";
-				word.append(1, ch);
-			}
-			else
-			{
-				std::cout << "word: " << word << "\n";
-				if (IsObsceneWord(obsceneWords, word))
-				{
-					outputLine = EraseWordFromInputLine(inputLine, word);
-				}
-				else
-				{
-					outputLine = inputLine;
-				}
-				word.clear();
-			}
+			word.append(1, ch);
 		}
-		return outputLine;
+		else if (IsObsceneWord(obsceneWords, word))
+		{
+			outputLine = EraseWordFromString(outputLine, word);
+			word.clear();
+		}
+	    else
+		{
+		    word.clear();
+		}
 	}
+	if (IsObsceneWord(obsceneWords, word))
+	{
+		outputLine = EraseWordFromString(outputLine, word);
+	}
+	return outputLine;
 }

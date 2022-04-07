@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 	setlocale(LC_ALL, "Russian");
 	SetConsoleCP(1251);
 	const std::string DELIMETR = "\" +-=#*{}[]<>()';,.:!?&@\t";
-	std::unordered_set<char> delimetrs = { '\"', '+', '-', '=', '#', '*', '\\', '{', '}', '(', ')', '[', ']', '\'', ':', ';',
+	std::unordered_set<char> delimetrs = { ' ', '\"', '+', '-', '=', '#', '*', '\\', '{', '}', '(', ')', '[', ']', '\'', ':', ';',
 	',', '.' };
 	for (auto& i:delimetrs)
 	{
@@ -43,10 +43,10 @@ int main(int argc, char* argv[])
 	}
 	cout << "Enter the line:\n";
 	string inputLine;
-	getline(cin, inputLine);
-	string workingLine = inputLine;
-	//подумай над названием
-
-	//cout << FindAndEraseObsceneWord(obsceneWords, workingLine, DELIMETR) << "\n";
-	cout << FilterObsceneWord(obsceneWords, workingLine, delimetrs) << "\n";
+	while(getline(cin, inputLine))
+	{
+		string workingLine = inputLine;
+		//подумай над названием
+		cout << FilterObsceneWord(obsceneWords, workingLine, delimetrs) << "\n";
+	}
 }
