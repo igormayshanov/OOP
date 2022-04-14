@@ -12,5 +12,5 @@ public:
 private:
 	int m_selectedChannel = 1;
 	bool m_isOn = false;
-	int m_previosChannel = m_selectedChannel;
+	int m_previosChannel = 1;
 };

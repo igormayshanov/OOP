@@ -1,9 +1,5 @@
-﻿#include <iostream>
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "CTVSet.h"
-#include <assert.h>
-#include <cstring>
-
 
 using namespace std;
 
@@ -52,6 +48,7 @@ void TestSelectPreviosChannel()
 	validTV.SelectPreviousChannel();
 	assert(validTV.GetChannel() == 1);
 
+	validTV.SelectChannel(2);
 	validTV.SelectChannel(3);
 	validTV.SelectPreviousChannel();
 	assert(validTV.GetChannel() == 2);
@@ -104,7 +101,6 @@ int main()
 		case 4:
 			tv.SelectPreviousChannel();
 			break;
-		
 		case 5:
 			exit = false;
 			break;

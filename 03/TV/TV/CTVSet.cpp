@@ -16,7 +16,10 @@ void CTVSet::SelectChannel(int channel)
 	int minChannel = 1;
 	int maxChannel = 99;
 	if (channel >= minChannel && channel <= maxChannel && m_isOn)
+	{
+		m_previosChannel = m_selectedChannel;
 		m_selectedChannel = channel;
+	}	
 }
 int CTVSet::GetChannel() const
 {
