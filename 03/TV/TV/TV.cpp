@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
-#include "CTVSet.h"
+#include "TVSet.h"
+#include "RemoteControl.h"
 
 using namespace std;
 
@@ -73,54 +74,15 @@ int main()
 	TestTVCreation();
 	TestSelectPreviosChannel();
 	CTVSet tv;
-	int choice;
-	bool exit = true;
-	while (exit)
+	CRemoteControl remoteControl(tv, cin, cout);
+
+	while (!cin.eof() && !cin.fail())
 	{
-		std::cout << "Choose an action" << std::endl;
-		std::cout << "1. Turn on TV" << std::endl;
-		std::cout << "2. Turn off TV" << std::endl;
-		std::cout << "3. Select channel" << std::endl;
-		std::cout << "4. Select previos channel" << std::endl;
-		std::cout << "5. Exit" << std::endl;
-		choice = getMenuItemNumber(6);
-		switch (choice)
+		cout << "> ";
+		if (!remoteControl.HandleCommand())
 		{
-		case 1:
-			tv.TurnOn();
-			break;
-		case 2:
-			tv.TurnOff();
-			break;
-		case 3:
-			int channel;
-			cout << "Enter the channel number in the range from 1 to 99: ";
-			cin >> channel;
-			tv.SelectChannel(channel);
-			break;
-		case 4:
-			tv.SelectPreviousChannel();
-			break;
-		case 5:
-			exit = false;
-			break;
+			cout << "Unknown command!" << endl;
 		}
-		string onOrOff;
-		tv.IsTurnedOn() ? onOrOff = "ON" : onOrOff = "OFF";
-		cout << "TV is " << onOrOff << ", "
-			 << " current channel is " << tv.GetChannel() << "\n";
 	}
 	return 0;
-}
-
-int getMenuItemNumber(int menuItems)
-{
-	int itemNumber;
-	cin >> itemNumber;
-	while ( itemNumber < 1 || itemNumber > menuItems)
-	{
-		std::cout << "Incorrect input. Try again: ";
-		cin >> itemNumber;
-	}
-	return itemNumber;
 }
