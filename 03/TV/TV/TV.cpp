@@ -95,6 +95,10 @@ void TestSetChannelName()
 	validTV.SetChannelName(2, "Russia");
 	assert(validTV.GetChannelByName("Russia") == 2);
 
+	//Установить канал по имени
+	validTV.SelectChannel("Russia");
+	assert(validTV.GetChannel() == 2);
+
 	//Получить номер у канала с несуществующим именем "RU"
 	assert(validTV.GetChannelByName("RU") == 0);
 
@@ -116,7 +120,6 @@ void TestRemoteControl()
 	stringstream output;
 	CRemoteControl remoteControl(tv, input, output);
 }
-
 
 int main()
 {

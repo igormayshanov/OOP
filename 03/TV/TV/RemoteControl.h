@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include "stdafx.h"
 
 class CTVSet;
@@ -9,7 +9,7 @@ public:
 	CRemoteControl(CTVSet& tv, std::istream& input, std::ostream& output);
 	bool HandleCommand();
 
-	// Избавляемся от предупреждения компилятора о том, что он не сможет сгенерировать оператор присваивания
+	// РР·Р±Р°РІР»СЏРµРјСЃСЏ РѕС‚ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ РєРѕРјРїРёР»СЏС‚РѕСЂР° Рѕ С‚РѕРј, С‡С‚Рѕ РѕРЅ РЅРµ СЃРјРѕР¶РµС‚ СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
 	// CRemoteControl& operator=(const CRemoteControl &) = delete;
 private:
 	bool TurnOn(std::istream& args);
@@ -23,11 +23,11 @@ private:
 	bool DeleteChannelName(std::istream& args);
 
 private:
-	// функция-обработчик команды пользователя.
-	// Возвращает true, если команда распознана и false, если были ошибки
+	// С„СѓРЅРєС†РёСЏ-РѕР±СЂР°Р±РѕС‚С‡РёРє РєРѕРјР°РЅРґС‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё РєРѕРјР°РЅРґР° СЂР°СЃРїРѕР·РЅР°РЅР° Рё false, РµСЃР»Рё Р±С‹Р»Рё РѕС€РёР±РєРё
 	using Handler = std::function<bool(std::istream& args)>;
 
-	// Отображает название команды на её обработчик
+	// РћС‚РѕР±СЂР°Р¶Р°РµС‚ РЅР°Р·РІР°РЅРёРµ РєРѕРјР°РЅРґС‹ РЅР° РµС‘ РѕР±СЂР°Р±РѕС‚С‡РёРє
 	using ActionMap = std::map<std::string, Handler>;
 
 	CTVSet& m_tv;
@@ -35,4 +35,8 @@ private:
 	std::ostream& m_output;
 
 	const ActionMap m_actionMap;
+
+	std::string RemoveExtraSpaces(std::string const& str);
+
+	std::string TurnedOffMessage = "TV is turned off\n";
 };

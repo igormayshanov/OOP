@@ -1,5 +1,5 @@
-#include "TVSet.h"
 #include "stdafx.h"
+#include "TVSet.h"
 
 using namespace std;
 
@@ -8,7 +8,7 @@ void CTVSet::TurnOn()
 	if (!m_isOn)
 		m_isOn = true;
 }
-void CTVSet::TurnOff() 
+void CTVSet::TurnOff()
 {
 	if (m_isOn)
 		m_isOn = false;
@@ -28,8 +28,13 @@ bool CTVSet::SelectChannel(int channelNum)
 		m_previosChannel = m_selectedChannel;
 		m_selectedChannel = channelNum;
 		return true;
-	}	
+	}
 	return false;
+}
+
+bool CTVSet::SelectChannel(std::string channelName)
+{
+	return SelectChannel(GetChannelByName(channelName));
 }
 
 int CTVSet::GetChannel() const
@@ -46,6 +51,11 @@ void CTVSet::SelectPreviousChannel()
 {
 	if (m_isOn)
 		std::swap(m_selectedChannel, m_previosChannel);
+}
+
+std::map<int, std::string> CTVSet::GetChannelsMap()
+{
+	return m_channelsMap;
 }
 
 bool CTVSet::SetChannelName(int channelNum, std::string channelName)

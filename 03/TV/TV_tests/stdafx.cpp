@@ -1,11 +1,11 @@
-// stdafx.cpp : source file that includes just the standard includes
+п»ї// stdafx.cpp : source file that includes just the standard includes
 // Task1Tests.pch will be the pre-compiled header
 // stdafx.obj will contain the pre-compiled type information
 
 #include "stdafx.h"
 
-// Сообщаем библиотеке boost test, что функция main будет предоставлена нами (для предварительного конфигурирования библиотеки), 
-// а не сгенерирована boost-ом за нас
+// РЎРѕРѕР±С‰Р°РµРј Р±РёР±Р»РёРѕС‚РµРєРµ boost test, С‡С‚Рѕ С„СѓРЅРєС†РёСЏ main Р±СѓРґРµС‚ РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅР° РЅР°РјРё (РґР»СЏ РїСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕРіРѕ РєРѕРЅС„РёРіСѓСЂРёСЂРѕРІР°РЅРёСЏ Р±РёР±Р»РёРѕС‚РµРєРё), 
+// Р° РЅРµ СЃРіРµРЅРµСЂРёСЂРѕРІР°РЅР° boost-РѕРј Р·Р° РЅР°СЃ
 #define BOOST_TEST_NO_MAIN 
-// подключаем реализацию boost test
+// РїРѕРґРєР»СЋС‡Р°РµРј СЂРµР°Р»РёР·Р°С†РёСЋ boost test
 #include <boost/test/included/unit_test.hpp>

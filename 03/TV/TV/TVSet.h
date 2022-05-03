@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "stdafx.h"
 
 class CTVSet
@@ -7,6 +7,7 @@ public:
 	void TurnOn();
 	void TurnOff();
 	bool SelectChannel(int channelNum);
+	bool SelectChannel(std::string channelName);
 	int GetChannel() const;
 	bool IsTurnedOn() const;
 	void SelectPreviousChannel();
@@ -14,6 +15,7 @@ public:
 	bool DeleteChannelName(std::string channelName);
 	std::string GetChannelName(int channelNum);
 	int GetChannelByName(std::string channelName);
+	std::map<int, std::string> GetChannelsMap();
 
 private:
 	int m_selectedChannel = 1;

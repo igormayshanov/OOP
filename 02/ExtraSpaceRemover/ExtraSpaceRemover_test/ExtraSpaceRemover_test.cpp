@@ -9,6 +9,10 @@ SCENARIO("Remove extra spaces of empty string gives an empty string")
 {
 	REQUIRE(RemoveExtraSpaces("").empty());
 }
+SCENARIO("Remove extra spaces from strig contains only spaces")
+{
+	REQUIRE(RemoveExtraSpaces("     ").empty());
+}
 SCENARIO("Remove spaces from string whithout spaces is the string itself")
 {
 	REQUIRE(RemoveExtraSpaces("abbbc") == "abbbc");
