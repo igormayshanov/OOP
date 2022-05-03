@@ -17,7 +17,12 @@ CRemoteControl::CRemoteControl(CTVSet& tv, std::istream& input, std::ostream& ou
 		  { "Info", bind(&CRemoteControl::Info, this, _1) },
 		  { "SelectChannel", bind(&CRemoteControl::SelectChannel, this, _1) },
 		  { "SelectPreviosChannel", bind(&CRemoteControl::SelectPreviosChannel, this, _1) },
-	  })
+		  { "SetChannelName", bind(&CRemoteControl::SetChannelName, this, _1) },
+		  { "GetChannelName", bind(&CRemoteControl::GetChannelName, this, _1) },
+		  { "GetChannelByName", bind(&CRemoteControl::GetChannelByName, this, _1) },
+		  { "DeleteChannelName", bind(&CRemoteControl::DeleteChannelName, this, _1) },
+
+		})
 {
 }
 
@@ -26,7 +31,7 @@ bool CRemoteControl::HandleCommand()
 	string commandLine;
 	getline(m_input, commandLine);
 	istringstream strm(commandLine);
-	int channel;
+	int channelNum;
 	string action;
 	strm >> action;
 
@@ -35,21 +40,22 @@ bool CRemoteControl::HandleCommand()
 	{
 		return it->second(strm);
 	}
-
 	return false;
 }
 
 bool CRemoteControl::TurnOn(std::istream& /*args*/)
 {
 	m_tv.TurnOn();
-	m_output << "TV is turned on" << endl;
+	m_output << "TV is turned on"
+			 << "\n";
 	return true;
 }
 
 bool CRemoteControl::TurnOff(std::istream& /*args*/)
 {
 	m_tv.TurnOff();
-	m_output << "TV is turned off" << endl;
+	m_output << "TV is turned off"
+			 << "\n";
 	return true;
 }
 
@@ -66,16 +72,55 @@ bool CRemoteControl::Info(std::istream& /*args*/)
 
 bool CRemoteControl::SelectChannel(std::istream& args)
 {
-	int channel;
-	args >> channel;
-	m_tv.SelectChannel(channel);
-	m_output << "Selected channel: " << m_tv.GetChannel() << endl;
+	int channelNum;
+	args >> channelNum;
+	m_tv.SelectChannel(channelNum);
+	m_output << "Selected channel: " << m_tv.GetChannel() << "\n";
 	return true;
 }
 
 bool CRemoteControl::SelectPreviosChannel(std::istream& /*args*/)
 {
 	m_tv.SelectPreviousChannel();
-	m_output << "Previos channel is: " << m_tv.GetChannel() << endl;
+	m_output << "Previos channel is: " << m_tv.GetChannel() << "\n";
+	return true;
+}
+
+bool CRemoteControl::SetChannelName(std::istream& args)
+{
+	int channelNum;
+	string channelName;
+	args >> channelNum;
+	getline(args, channelName);
+	m_tv.SetChannelName(channelNum, channelName);
+	m_output << m_tv.GetChannelByName(channelName) << " - " << m_tv.GetChannelName(channelNum) << "\n";
+	return true;
+}
+
+bool CRemoteControl::GetChannelName(std::istream& args)
+{
+	int channelNum;
+	args >> channelNum;
+	m_tv.GetChannelName(channelNum);
+	m_output << "Channel name is " << m_tv.GetChannelName(channelNum) << "\n";
+	return true;
+}
+
+bool CRemoteControl::GetChannelByName(std::istream& args)
+{
+	string channelName;
+	getline(args, channelName);
+	m_output << channelName << endl;
+	m_tv.GetChannelByName(channelName);
+	m_output << "Channel number is " << m_tv.GetChannelByName(channelName) << "\n";
+	return true;
+}
+
+bool CRemoteControl::DeleteChannelName(std::istream& args)
+{
+	string channelName;
+	args >> channelName;
+	m_tv.DeleteChannelName(channelName);
+	m_output << "Channel " << channelName << " deleted\n ";
 	return true;
 }

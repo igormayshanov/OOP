@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "../TV/TVSet.h"
 
-class CTVSet;
 /*
 Телевизор
 	изначально выключен

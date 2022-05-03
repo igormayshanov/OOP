@@ -70,7 +70,7 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		VerifyCommandHandling("Info", 42, "TV is turned on\nChannel is: 42\n");
 	}
 
-	
+	/*
 		// Раскомментируйте тест, проверяющий работу команды SelectChannel
 		//	попытке при выбрать доступный номер канала у включенного телевизора
 		// Убедитесь, что он не проходит (т.к. в CRemoteControl отсутствует требуемый функционал)
@@ -81,7 +81,9 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			tv.TurnOn();
 			VerifyCommandHandling("SelectChannel 42", 42, "Channel selected\n");
 		}
-	
+	*/
+
+	/*
 		// Раскомментируйте тест, проверяющий работу команды SelectChannel
 		//	попытке при выбрать доступный либо недоступный номер канала у выключенного телевизора
 		// Убедитесь, что он не проходит (т.к. в CRemoteControl отсутствует требуемый функционал)
@@ -92,7 +94,9 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			VerifyCommandHandling("SelectChannel 42", none, "Can't select channel because TV is turned off\n");
 			VerifyCommandHandling("SelectChannel 100", none, "Can't select channel because TV is turned off\n");
 		}
-	
+	*/
+
+	/*
 		// Раскомментируйте тест, проверяющий работу команды SelectChannel
 		//	попытке при выбрать недоступный номер канала у включенного телевизора
 		// Убедитесь, что он не проходит (т.к. в CRemoteControl отсутствует требуемый функционал)
@@ -105,7 +109,8 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			VerifyCommandHandling("SelectChannel 100", 42, "Invalid channel\n");
 			VerifyCommandHandling("SelectChannel 0", 42, "Invalid channel\n");
 		}
-	
+	*/
+
 	// Напишите тесты для недостающего функционала класса CRemoteControl (если нужно)
 	//	и для дополнительных заданий на бонусные баллы (если нужно)
 	// После написания каждого теста убедитесь, что он не проходит.

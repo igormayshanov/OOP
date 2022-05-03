@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include <algorithm>
 #include <functional>
 #include <iostream>
 #include <string>

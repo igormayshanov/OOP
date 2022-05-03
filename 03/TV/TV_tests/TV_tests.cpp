@@ -1,8 +1,11 @@
-﻿#include "stdafx.h"
+﻿// Task1Tests.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
 #include <boost/test/output/compiler_log_formatter.hpp>
 
 /*
-Данный класс управляет форматированием журнала запуска тестов
+Данный класс управляет формаитрованием журнала запуска тестов
 Для того, чтобы увидеть результат, приложение должно быть запущено с ключём --log-level=test_suite (см. Post-build event в настройках проекта)
 */
 class SpecLogFormatter : public boost::unit_test::output::compiler_log_formatter
