@@ -96,7 +96,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>--log-level=test_suite</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,7 +118,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>--log-level=test_suite</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,7 +136,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>--log-level=test_suite</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -155,14 +158,17 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>--log-level=test_suite</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\TV\RemoteControl.cpp" />
+    <ClCompile Include="..\TV\TVSet.cpp" />
     <ClCompile Include="RemoteControlTests.cpp" />
+    <ClCompile Include="TV_tests.cpp" />
     <ClCompile Include="TVSetTests.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="TV_tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\TV\RemoteControl.h" />

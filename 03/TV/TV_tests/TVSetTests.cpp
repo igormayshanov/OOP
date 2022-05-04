@@ -107,4 +107,100 @@ BOOST_FIXTURE_TEST_SUITE(TVSet, TVSetFixture)
 	// Имена тестам и test suite-ам давайте такие, чтобы выводимая в output иерархия
 	//	тестов читалась как спецификация на английском языке, описывающая поведение телевизора
 
+	struct select_previos_channel_ : when_turned_on_
+	{
+		select_previos_channel_()
+		{
+			tv.SelectChannel(2);
+			tv.SelectChannel(3);
+			tv.SelectPreviousChannel();
+		}
+	};
+
+	BOOST_FIXTURE_TEST_SUITE(select_previos_channel, select_previos_channel_)
+		BOOST_AUTO_TEST_CASE(restores_previos_selected_channel)
+		{
+			BOOST_CHECK_EQUAL(tv.GetChannel(), 2);
+		}
+		BOOST_AUTO_TEST_CASE(cant_select_previos_channel_when_turned_off)
+		{
+			tv.TurnOff();
+			tv.SelectPreviousChannel();
+			BOOST_CHECK_EQUAL(tv.GetChannel(), 0);
+		}
+		BOOST_AUTO_TEST_CASE(select_previos_channel_when_turned_on_after_turned_off)
+		{
+			tv.TurnOff();
+			tv.TurnOn();
+			tv.SelectPreviousChannel();
+			BOOST_CHECK_EQUAL(tv.GetChannel(), 3);
+		}
+	BOOST_AUTO_TEST_SUITE_END()
+
+	BOOST_AUTO_TEST_CASE(cant_set_channel_name_when_turned_off)
+	{
+		BOOST_CHECK(!tv.SetChannelName(1, "ORT"));
+	}
+
+	struct set_channel_name_ : when_turned_on_
+	{
+		set_channel_name_()
+		{
+			tv.SetChannelName(1, "ORT");
+			tv.SetChannelName(2, "RTR");
+			tv.SetChannelName(3, "NTV");
+			tv.SetChannelName(4, "STS");
+		}
+	};
+	BOOST_FIXTURE_TEST_SUITE(set_channel_name, set_channel_name_)
+		BOOST_AUTO_TEST_CASE(set_channel_name)
+		{
+			BOOST_CHECK_EQUAL(tv.GetChannelByName("ORT"), 1);
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "ORT");
+		}
+
+		BOOST_AUTO_TEST_CASE(set_channel_name_that_was_used)
+		{
+			tv.SetChannelName(5, "ORT");
+			BOOST_CHECK_EQUAL(tv.GetChannelByName("ORT"), 5);
+			BOOST_CHECK_EQUAL(tv.GetChannelName(5), "ORT");
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "Channel has no name");
+		}
+
+		BOOST_AUTO_TEST_CASE(Set_channel_name_with_previously_set_name)
+		{
+			tv.SetChannelName(5, "STS");
+			BOOST_CHECK_EQUAL(tv.GetChannelName(5), "STS");
+		}
+
+		BOOST_AUTO_TEST_CASE(get_channel_with_a_non_existent_name_RU)
+		{
+			BOOST_CHECK_EQUAL(tv.GetChannelByName("Ru"), 0);
+		}
+
+		BOOST_AUTO_TEST_CASE(delete_channel_name)
+		{
+			BOOST_CHECK(tv.DeleteChannelName("RTR"));
+			BOOST_CHECK_EQUAL(tv.GetChannelName(2), "Channel has no name");
+		}
+
+		BOOST_AUTO_TEST_CASE(delete_channel_whith_non_existent_name_RU)
+		{
+			BOOST_CHECK(!tv.DeleteChannelName("Ru"));
+		}
+		
+		BOOST_AUTO_TEST_CASE(select_channel_by_name)
+		{
+			tv.SelectChannel("NTV");
+			BOOST_CHECK_EQUAL(tv.GetChannel(), 3);
+		}
+
+		BOOST_AUTO_TEST_CASE(select_channel_by_non_existing_name_display_channel_one)
+		{
+			tv.SelectChannel("Ru");
+			BOOST_CHECK_EQUAL(tv.GetChannel(), 1);
+		}
+
+	BOOST_AUTO_TEST_SUITE_END()
+
 BOOST_AUTO_TEST_SUITE_END()

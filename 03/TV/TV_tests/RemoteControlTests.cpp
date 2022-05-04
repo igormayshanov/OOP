@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "../TV/RemoteControl.h"
 #include "../TV/TVSet.h"
+#include <sstream>
 #include <boost/optional.hpp>
 
 using namespace std;
