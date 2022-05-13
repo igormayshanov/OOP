@@ -153,9 +153,13 @@ BOOST_FIXTURE_TEST_SUITE(TVSet, TVSetFixture)
 		}
 	};
 	BOOST_FIXTURE_TEST_SUITE(set_channel_name, set_channel_name_)
-		BOOST_AUTO_TEST_CASE(set_channel_name)
+		BOOST_AUTO_TEST_CASE(get_channel_by_name)
 		{
 			BOOST_CHECK_EQUAL(tv.GetChannelByName("ORT"), 1);
+		}
+
+		BOOST_AUTO_TEST_CASE(get_channel_name)
+		{
 			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "ORT");
 		}
 
@@ -172,7 +176,7 @@ BOOST_FIXTURE_TEST_SUITE(TVSet, TVSetFixture)
 			tv.SetChannelName(5, "STS");
 			BOOST_CHECK_EQUAL(tv.GetChannelName(5), "STS");
 		}
-
+		//
 		BOOST_AUTO_TEST_CASE(get_channel_with_a_non_existent_name_RU)
 		{
 			BOOST_CHECK_EQUAL(tv.GetChannelByName("Ru"), 0);
@@ -188,7 +192,7 @@ BOOST_FIXTURE_TEST_SUITE(TVSet, TVSetFixture)
 		{
 			BOOST_CHECK(!tv.DeleteChannelName("Ru"));
 		}
-		
+
 		BOOST_AUTO_TEST_CASE(select_channel_by_name)
 		{
 			tv.SelectChannel("NTV");

@@ -113,14 +113,6 @@ void TestSetChannelName()
 	cout << "TV Set Channel Name test is ok\n";
 }
 
-void TestRemoteControl()
-{
-	CTVSet tv;
-	stringstream input;
-	stringstream output;
-	CRemoteControl remoteControl(tv, input, output);
-}
-
 int main()
 {
 	TestTVCreation();

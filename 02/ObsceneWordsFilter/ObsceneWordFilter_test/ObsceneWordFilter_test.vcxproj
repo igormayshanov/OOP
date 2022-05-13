@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{a9fe5f39-daa9-42ae-a85c-97a0fe8eb4d8}</ProjectGuid>
-    <RootNamespace>FindText</RootNamespace>
+    <ProjectGuid>{d9ddc52a-0cf4-4c65-8be0-44759e61928b}</ProjectGuid>
+    <RootNamespace>ObsceneWordFiltertest</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -94,6 +94,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -111,6 +114,9 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -124,6 +130,9 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -141,9 +150,25 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(TargetPath)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FindText.cpp" />
+    <ClCompile Include="..\ObsceneWordsFilter\ObscenWordsFilterFunctions.cpp" />
+    <ClCompile Include="..\ObsceneWordsFilter\OpenFile.cpp" />
+    <ClCompile Include="..\ObsceneWordsFilter\ParseArgs.cpp" />
+    <ClCompile Include="ObsceneWordFilter_test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\ObsceneWordsFilter\ObscenWordsFilterFunctions.h" />
+    <ClInclude Include="..\ObsceneWordsFilter\OpenFile.h" />
+    <ClInclude Include="..\ObsceneWordsFilter\ParseArgs.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="1row.txt" />
+    <Text Include="2row.txt" />
+    <Text Include="emptyFile.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -31,7 +31,7 @@ SCENARIO("FillVector")
 	WHEN("input string contains more than one numbers")
 	{
 		std::string str = "1.111 2.001 3.2222";
-		std::vector<float> input = {1.111, 2.001, 3.2222};
+		std::vector<float> input = {1.111f, 2.001f, 3.222f};
 		THEN("output string must contains all input numbers")
 		{
 			auto output = FillVector(str);
@@ -70,7 +70,7 @@ SCENARIO("CalculateSumOfMinElements")
 	}
 	WHEN("input vector contain several numbers")
 	{
-		std::vector<float> input = { 1.1, 2.2, 3.3, 4.4 };
+		std::vector<float> input = { 1.1f, 2.2f, 3.3f, 4.4f };
 		float result = 6.6;
 		THEN("sum == 6.6")
 		{
@@ -93,9 +93,9 @@ SCENARIO("AddNumberToVectorElements")
 	}
 	WHEN("input vector contain 1 number")
 	{
-		std::vector<float> input = {1.1};
-		float number = 2.1;
-		std::vector<float> correctOutput = {3.2};
+		std::vector<float> input = {1.1f};
+		float number = 2.1f;
+		std::vector<float> correctOutput = {3.2f};
 		THEN("output vector {3.2}")
 		{
 			AddNumberToVectorElements(input, number);

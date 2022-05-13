@@ -46,15 +46,14 @@ bool CRemoteControl::HandleCommand()
 bool CRemoteControl::TurnOn(std::istream& /*args*/)
 {
 	m_tv.TurnOn();
-	m_output << "TV is turned on"
-			 << "\n";
+	m_output << "TV is turned on\n";
 	return true;
 }
 
 bool CRemoteControl::TurnOff(std::istream& /*args*/)
 {
 	m_tv.TurnOff();
-	m_output << TurnedOffMessage;
+	m_output << "TV is turned off\n";
 	return true;
 }
 
@@ -83,24 +82,29 @@ bool CRemoteControl::SelectChannel(std::istream& args)
 		args >> channelNum;
 		if (!args.fail())
 		{
-			m_output << "channelNum " << channelNum << "\n";
-			m_tv.SelectChannel(channelNum);	
+			if (m_tv.isChannelInRange(channelNum))
+			{
+				m_tv.SelectChannel(channelNum);
+				m_output << "Selected channel: " << m_tv.GetChannel() << "\n";
+			}
+			else
+			{
+				m_output << "Invalid channel\n";
+			}
 		}
 		else
 		{
 			args.clear();
 			string channelName;
 			args >> channelName;
-			m_output << "channelName " << channelName << "\n";
 			m_tv.SelectChannel(channelName);
+			m_output << "Selected channel: " << m_tv.GetChannel() << "\n";
 		}
-		m_output << "Selected channel: " << m_tv.GetChannel() << "\n";
 	}
 	else
 	{
 		m_output << TurnedOffMessage;
 	}
-
 	return true;
 }
 

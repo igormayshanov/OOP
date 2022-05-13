@@ -71,8 +71,10 @@ void PrintDec2Bin(std::optional<Args>& args)
 {
 	bool printDigitFlag = false;
 	short numberDigit;
+	short maxNumberDigit = 31;
+	short minNumberDigit = 0;
 	//magic num 31
-	for (int i = 31; i >= 0; i--)
+	for (int i = maxNumberDigit; i >= minNumberDigit; i--)
 	{
 		numberDigit = ((args->number >> i) & 0b1);
 		if (!printDigitFlag && numberDigit)

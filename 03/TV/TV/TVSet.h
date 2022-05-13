@@ -16,6 +16,7 @@ public:
 	std::string GetChannelName(int channelNum);
 	int GetChannelByName(std::string channelName);
 	std::map<int, std::string> GetChannelsMap();
+	bool isChannelInRange(int channel);
 
 private:
 	int m_selectedChannel = 1;
@@ -23,5 +24,4 @@ private:
 	int m_previosChannel = 1;
 	std::string m_channelName;
 	std::map<int, std::string> m_channelsMap;
-	bool isChannelInRange(int channel);
 };

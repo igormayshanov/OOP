@@ -62,7 +62,7 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 	BOOST_AUTO_TEST_CASE(can_print_tv_info)
 	{
 		// Ожидаемое поведение команды Info, вызванной у выключенного телевизора
-		VerifyCommandHandling("Info", none, "TV is turned off\n");
+		VerifyCommandHandling("Info", none, "Can't do action becuase TV is turned off\n");
 
 		// Проверяем поведение команды Info у включенного телевизора
 		tv.TurnOn();
@@ -70,7 +70,6 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		VerifyCommandHandling("Info", 42, "TV is turned on\nChannel is: 42\n");
 	}
 
-	/*
 		// Раскомментируйте тест, проверяющий работу команды SelectChannel
 		//	попытке при выбрать доступный номер канала у включенного телевизора
 		// Убедитесь, что он не проходит (т.к. в CRemoteControl отсутствует требуемый функционал)
@@ -79,11 +78,9 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		BOOST_AUTO_TEST_CASE(can_select_a_valid_channel_when_tv_which_is_on)
 		{
 			tv.TurnOn();
-			VerifyCommandHandling("SelectChannel 42", 42, "Channel selected\n");
+			VerifyCommandHandling("SelectChannel 42", 42, "Selected channel: 42\n");
 		}
-	*/
 
-	/*
 		// Раскомментируйте тест, проверяющий работу команды SelectChannel
 		//	попытке при выбрать доступный либо недоступный номер канала у выключенного телевизора
 		// Убедитесь, что он не проходит (т.к. в CRemoteControl отсутствует требуемый функционал)
@@ -91,12 +88,10 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		// При необходимости выполните рефакторинг кода, сохраняя работоспособность тестов
 		BOOST_AUTO_TEST_CASE(cant_select_channel_when_tv_is_turned_off)
 		{
-			VerifyCommandHandling("SelectChannel 42", none, "Can't select channel because TV is turned off\n");
-			VerifyCommandHandling("SelectChannel 100", none, "Can't select channel because TV is turned off\n");
+			VerifyCommandHandling("SelectChannel 42", none, "Can't do action becuase TV is turned off\n");
+			VerifyCommandHandling("SelectChannel 100", none, "Can't do action becuase TV is turned off\n");
 		}
-	*/
-
-	/*
+	
 		// Раскомментируйте тест, проверяющий работу команды SelectChannel
 		//	попытке при выбрать недоступный номер канала у включенного телевизора
 		// Убедитесь, что он не проходит (т.к. в CRemoteControl отсутствует требуемый функционал)
@@ -109,8 +104,7 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			VerifyCommandHandling("SelectChannel 100", 42, "Invalid channel\n");
 			VerifyCommandHandling("SelectChannel 0", 42, "Invalid channel\n");
 		}
-	*/
-
+	
 	// Напишите тесты для недостающего функционала класса CRemoteControl (если нужно)
 	//	и для дополнительных заданий на бонусные баллы (если нужно)
 	// После написания каждого теста убедитесь, что он не проходит.
@@ -119,5 +113,50 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 	// При необходимости используйте вложенные тесты (как использующие fixture, так и нет)
 	// Имена тестам и test suite-ам давайте такие, чтобы выводимая в output иерархия
 	//	тестов читалась как спецификация на английском языке, описывающая поведение remote control-а
+		
+		BOOST_AUTO_TEST_CASE(restores_previos_selected_channel)
+		{
+			tv.TurnOn();
+			tv.SelectChannel(2);
+			tv.SelectChannel(3);
+			VerifyCommandHandling("SelectPreviosChannel", 2, "Previos channel is: 2\n");
+			VerifyCommandHandling("SelectPreviosChannel", 3, "Previos channel is: 3\n");
+		}
+		
+		BOOST_AUTO_TEST_CASE(cant_select_previos_channel_when_turned_off)
+		{
+			VerifyCommandHandling("SelectPreviosChannel", none, "Can't do action becuase TV is turned off\n");
+		}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+struct RemoteControlFixtureWhithChannelName : RemoteControlDependencies
+{
+	CRemoteControl remoteControl;
+
+	RemoteControlFixtureWhithChannelName()
+		: remoteControl(tv, input, output)
+	{
+	}
+
+	void VerifyCommandHandling(const string& command, const optional<int>& expectedChannel, const string& expectedOutput)
+	{
+		output = stringstream();
+		input = stringstream();
+		BOOST_CHECK(input << command);
+		BOOST_CHECK(remoteControl.HandleCommand());
+		BOOST_CHECK_EQUAL(tv.IsTurnedOn(), expectedChannel.is_initialized());
+		BOOST_CHECK_EQUAL(tv.GetChannelName(expectedChannel), expectedChannel.get_value_or(0));
+		BOOST_CHECK(input.eof());
+		BOOST_CHECK_EQUAL(output.str(), expectedOutput);
+	}
+};
+
+BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
+	BOOST_AUTO_TEST_CASE(set_channel_name)
+	{
+		tv.TurnOn();
+		VerifyCommandHandling("SetChannelName 1 ORT", 1, "1 - ORT");
+	}
 
 BOOST_AUTO_TEST_SUITE_END()

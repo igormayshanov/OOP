@@ -10,8 +10,12 @@ void CTVSet::TurnOn()
 }
 void CTVSet::TurnOff()
 {
+	//когда телевизор выключаетс€ у него выбран 0 канал
 	if (m_isOn)
+	{
+		m_selectedChannel = 0;
 		m_isOn = false;
+	}
 }
 
 bool CTVSet::isChannelInRange(int channel)
@@ -91,7 +95,7 @@ std::string CTVSet::GetChannelName(int channelNum)
 	}
 	return "Channel has no name";
 }
-
+//≈сли канала нет, то выбросить исключение или использовать optional 
 int CTVSet::GetChannelByName(string channelName)
 {
 	if (m_isOn)

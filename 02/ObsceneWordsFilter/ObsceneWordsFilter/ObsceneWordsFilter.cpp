@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 {
 	setlocale(LC_ALL, "Russian");
 	SetConsoleCP(1251);
-	const std::string DELIMETR = "\" +-=#*{}[]<>()';,.:!?&@\t";
+	//const std::string DELIMETR = "\" +-=#*{}[]<>()';,.:!?&@\t";
 	std::unordered_set<char> delimetrs = { ' ', '\"', '+', '-', '=', '#', '*', '\\', '{', '}', '(', ')', '[', ']', '\'', ':', ';',
 	',', '.' };
 	for (auto& i:delimetrs)
@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
 		cout << i << ", ";
 	}
 	cout << "\n";
+	//
 	auto inputFileName = ParseArgs(argc, argv);
 	if (!inputFileName)
 	{
@@ -41,7 +42,7 @@ int main(int argc, char* argv[])
 	{
 		cout << i << "\n";
 	}
-	cout << "Enter the line:\n";
+	cout << "Enter the strings:\n";
 	string inputLine;
 	while(getline(cin, inputLine))
 	{

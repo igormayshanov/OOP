@@ -27,8 +27,7 @@ private:
 	// Возвращает true, если команда распознана и false, если были ошибки
 	using Handler = std::function<bool(std::istream& args)>;
 
-	// Отображает название команды на её обработчик
-	using ActionMap = std::map<std::string, Handler>;
+	using ActionMap = std::map<std::string, Handler>; 	// Отображает название команды на её обработчик
 
 	CTVSet& m_tv;
 	std::istream& m_input;
@@ -38,5 +37,5 @@ private:
 
 	std::string RemoveExtraSpaces(std::string const& str);
 
-	std::string TurnedOffMessage = "TV is turned off\n";
+	std::string TurnedOffMessage = "Can't do action becuase TV is turned off\n";
 };

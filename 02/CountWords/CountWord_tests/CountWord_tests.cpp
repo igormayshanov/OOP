@@ -71,24 +71,4 @@ SCENARIO("CountWordsInLines")
 			CHECK(outputMap == resultMap);
 		}
 	}
-	WHEN("input the word contained in map")
-	{
-		std::map<std::string, unsigned int> inputMap = { { "word", 1 } };
-		std::map<std::string, unsigned int> resultMap = { { "word", 2 } };
-		THEN("output map contain the key with word name and meaning 2")
-		{
-			outputMap = FillMapAndCountWords(inputMap, "word");
-			CHECK(outputMap == resultMap);
-		}
-	}
-	WHEN("input the word not contained in map")
-	{
-		std::map<std::string, unsigned int> inputMap = { { "line", 1 } };
-		std::map<std::string, unsigned int> resultMap = { { "line", 1 }, { "word", 1 } };
-		THEN("output map contain 2 key with words name and meaning 1")
-		{
-			outputMap = FillMapAndCountWords(inputMap, "word");
-			CHECK(outputMap == resultMap);
-		}
-	}
 }

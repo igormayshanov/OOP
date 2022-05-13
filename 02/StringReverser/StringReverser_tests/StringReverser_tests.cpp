@@ -30,7 +30,7 @@ SCENARIO("ReverseLines")
 			CHECK(input.eof());
 		}
 	}
-	WHEN("input stream conteins one line")
+	WHEN("input stream contains one line")
 	{
 		std::istringstream input("1 line");
 		THEN("output stream contains the line reversed")
