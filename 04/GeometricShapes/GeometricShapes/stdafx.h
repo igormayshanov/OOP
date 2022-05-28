@@ -5,11 +5,13 @@
 #pragma once
 
 #include <iostream>
+#include <functional>
 #include <stdio.h>
 #include <tchar.h>
 #define _USE_MATH_DEFINES
 #include <iomanip>
 #include <math.h>
+#include <map>
 #include <sstream>
 #include <string>
 #include <vector>
