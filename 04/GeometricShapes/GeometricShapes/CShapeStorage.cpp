@@ -2,6 +2,7 @@
 #include "CShapeStorage.h"
 #include "CCircle.h"
 #include "CRectangle.h"
+#include "CTriangle.h"
 
 using namespace std;
 using namespace std::placeholders;
@@ -12,6 +13,7 @@ CShapeStorage::CShapeStorage(std::istream& input, std::ostream& output)
 	, m_actionMap({
 		  { "rectangle", bind(&CShapeStorage::AddRectangle, this, _1) },
 		  { "circle", bind(&CShapeStorage::AddCircle, this, _1) },
+		  { "triangle", bind(&CShapeStorage::AddTriangle, this, _1) },
 	  })
 {
 }
@@ -60,6 +62,27 @@ bool CShapeStorage::AddCircle(std::istream& args)
 		CCircle circle(x, y, radius, outlineColor, fillColor);
 		m_shapeStorage.push_back(&circle);
 		m_output << "Circle added"
+				 << "\n";
+	}
+	else
+	{
+		return false;
+	}
+	return true;
+}
+
+bool CShapeStorage::AddTriangle(std::istream& args)
+{
+	double x1 = 0, y1 = 0;
+	double x2 = 0, y2 = 0;
+	double x3 = 0, y3 = 0;
+	uint32_t outlineColor = 0, fillColor = 0;
+	args >> x1 >> y1 >> x2 >> y2 >> x3 >> y3 >> outlineColor >> fillColor;
+	if (!args.fail())
+	{
+		CTriangle triangle(x1, y1, x2, y2, x3, y3, outlineColor, fillColor);
+		m_shapeStorage.push_back(&triangle);
+		m_output << "Triangle added"
 				 << "\n";
 	}
 	else

@@ -13,6 +13,7 @@ public:
 private:
 	bool AddRectangle(std::istream& args);
 	bool AddCircle(std::istream& args);
+	bool AddTriangle(std::istream& args);
 
 private:
 	// функция-обработчик команды пользователя.
@@ -26,6 +27,4 @@ private:
 	std::vector<IShape*> m_shapeStorage;
 
 	const ActionMap m_actionMap;
-
-	std::string RemoveExtraSpaces(std::string const& str);
 };
