@@ -21,7 +21,9 @@ double CLineSegment::GetPerimetr()
 
 std::string CLineSegment::ToString()
 {
-	return "LineSegment";
+	return "Line segment, start point = "
+		+ std::to_string(m_startPoint.m_x) + ", " + std::to_string(m_startPoint.m_y)
+		+ ", end point = " + std::to_string(m_endPoint.m_x) + ", " + std::to_string(m_endPoint.m_y);
 }
 
 uint32_t CLineSegment::GetOutlineColor()

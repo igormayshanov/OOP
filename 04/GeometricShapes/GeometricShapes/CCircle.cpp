@@ -1,9 +1,8 @@
 #include "CCircle.h"
 #include "stdafx.h"
 
-
-CCircle::CCircle(double x, double y, double radius, uint32_t outlineColor, uint32_t fillColor)
-	: m_centr({ x, y })
+CCircle::CCircle(CPoint centr, double radius, uint32_t outlineColor, uint32_t fillColor)
+	: m_centr(centr)
 	, m_radius(radius)
 	, m_outlineColor(outlineColor)
 	, m_fillColor(fillColor)
@@ -22,7 +21,10 @@ double CCircle::GetPerimetr()
 
 std::string CCircle::ToString()
 {
-	return "Circle";
+	return "Circle, centr = " 
+		+ std::to_string(GetCenter().m_x)
+		+ ", " + std::to_string(GetCenter().m_y)
+		+ ", radius = " + std::to_string(GetRadius());
 }
 
 uint32_t CCircle::GetOutlineColor()

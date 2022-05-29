@@ -2,11 +2,11 @@
 #include "CTriangle.h"
 #include "CLineSegment.h"
 
-CTriangle::CTriangle(double x1, double y1, double x2, double y2, double x3, double y3,
+CTriangle::CTriangle(CPoint vertex1, CPoint vertex2, CPoint vertex3,
 	uint32_t outlineColor, uint32_t fillColor)
-	: m_vertex1({ x1, y1 })
-	, m_vertex2({ x2, y2 })
-	, m_vertex3({ x3, y3 })
+	: m_vertex1(vertex1)
+	, m_vertex2(vertex2)
+	, m_vertex3(vertex3)
 	, m_outlineColor(outlineColor)
 	, m_fillColor(fillColor)
 {
@@ -39,7 +39,11 @@ std::vector<double> CTriangle::GetSides()
 
 std::string CTriangle::ToString()
 {
-	return "CTriangle";
+	return "Triangle, vertex1 = "
+		+ std::to_string(m_vertex1.m_x) + ", " + std::to_string(m_vertex1.m_y)
+		+ ", vertex2 = " + std::to_string(m_vertex2.m_x) + ", " + std::to_string(m_vertex2.m_y)
+		+ ", vertex3 = " + std::to_string(m_vertex3.m_x) + ", " + std::to_string(m_vertex3.m_y)
+		+ ", fillColor = " + std::to_string(m_fillColor);
 }
 
 uint32_t CTriangle::GetOutlineColor()

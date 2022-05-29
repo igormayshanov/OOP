@@ -1,30 +1,32 @@
-#pragma once
+п»ї#pragma once
 #include "stdafx.h"
 #include "IShape.h"
 
 class CShapeStorage
 {
 public:
+	~CShapeStorage(){};
 	CShapeStorage(std::istream& input, std::ostream& output);
 	bool HandleCommand();
+	void GetMaxAreaShape() const;
+	void GetMinPerimetrShape() const;
 
-	// Избавляемся от предупреждения компилятора о том, что он не сможет сгенерировать оператор присваивания
-	// CRemoteControl& operator=(const CRemoteControl &) = delete;
+	// РР·Р±Р°РІР»СЏРµРјСЃСЏ РѕС‚ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ РєРѕРјРїРёР»СЏС‚РѕСЂР° Рѕ С‚РѕРј, С‡С‚Рѕ РѕРЅ РЅРµ СЃРјРѕР¶РµС‚ СЃРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
 private:
 	bool AddRectangle(std::istream& args);
 	bool AddCircle(std::istream& args);
 	bool AddTriangle(std::istream& args);
+	bool AddLine(std::istream& args);
 
-private:
-	// функция-обработчик команды пользователя.
-	// Возвращает true, если команда распознана и false, если были ошибки
+	// С„СѓРЅРєС†РёСЏ-РѕР±СЂР°Р±РѕС‚С‡РёРє РєРѕРјР°РЅРґС‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+	// Р’РѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё РєРѕРјР°РЅРґР° СЂР°СЃРїРѕР·РЅР°РЅР° Рё false, РµСЃР»Рё Р±С‹Р»Рё РѕС€РёР±РєРё
 	using Handler = std::function<bool(std::istream& args)>;
 
-	using ActionMap = std::map<std::string, Handler>; // Отображает название команды на её обработчик
+	using ActionMap = std::map<std::string, Handler>; // РћС‚РѕР±СЂР°Р¶Р°РµС‚ РЅР°Р·РІР°РЅРёРµ РєРѕРјР°РЅРґС‹ РЅР° РµС‘ РѕР±СЂР°Р±РѕС‚С‡РёРє
 
 	std::istream& m_input;
 	std::ostream& m_output;
-	std::vector<IShape*> m_shapeStorage;
+	std::vector<std::shared_ptr<IShape>> m_shapeStorage;
 
 	const ActionMap m_actionMap;
 };

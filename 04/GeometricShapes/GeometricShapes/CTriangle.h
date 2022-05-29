@@ -6,9 +6,7 @@
 class CTriangle : public ISolidShape
 {
 public:
-	CTriangle(double x1, double y1,
-			double x2, double y2,
-			double x3, double y3,
+	CTriangle(CPoint vertex1, CPoint vertex2, CPoint vertex3,
 			uint32_t outlineColor, uint32_t fillColor);
 	double GetArea() override;
 	double GetPerimetr() override;

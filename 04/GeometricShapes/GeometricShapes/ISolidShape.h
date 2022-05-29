@@ -3,6 +3,6 @@
 class ISolidShape : public IShape
 {
 public:
-	virtual ~ISolidShape(){};
+	virtual ~ISolidShape() {};
 	virtual uint32_t GetFillColor() = 0;
 };

@@ -1,7 +1,8 @@
 #include "CRectangle.h"
+#include "CPoint.h"
 
-CRectangle::CRectangle(double x, double y, double width, double height, uint32_t outlineColor, uint32_t fillColor)
-	: m_leftTop({ x, y })
+CRectangle::CRectangle(CPoint leftTop, double width, double height, uint32_t outlineColor, uint32_t fillColor)
+	: m_leftTop(leftTop)
 	, m_width(width)
 	, m_height(height)
 	, m_outlineColor(outlineColor)
@@ -21,7 +22,10 @@ double CRectangle::GetPerimetr()
 
 std::string CRectangle::ToString()
 {
-	return "Rectangle";
+	return "Rectangle, top left = "
+		+ std::to_string(m_leftTop.m_x) + ", " + std::to_string(m_leftTop.m_y)
+		+ ", height = " + std::to_string(m_height) + ", width = " + std::to_string(m_width)
+		+ ", fillColor = " + std::to_string(m_fillColor);
 }
 
 uint32_t CRectangle::GetOutlineColor()
