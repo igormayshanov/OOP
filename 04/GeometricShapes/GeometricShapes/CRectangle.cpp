@@ -23,9 +23,11 @@ double CRectangle::GetPerimetr()
 std::string CRectangle::ToString()
 {
 	return "Rectangle, top left = "
-		+ std::to_string(m_leftTop.m_x) + ", " + std::to_string(m_leftTop.m_y)
-		+ ", height = " + std::to_string(m_height) + ", width = " + std::to_string(m_width)
-		+ ", fillColor = " + std::to_string(m_fillColor);
+		+ std::to_string(GetLeftTop().m_x) + ", "
+		+ std::to_string(GetLeftTop().m_y)
+		+ ", height = " + std::to_string(std::round(GetHeight()))
+		+ ", width = " + std::to_string(GetWidth())
+		+ ", fillColor = " + std::to_string(GetFillColor());
 }
 
 uint32_t CRectangle::GetOutlineColor()

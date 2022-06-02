@@ -51,6 +51,7 @@ bool CShapeStorage::AddRectangle(std::istream& args)
 	}
 	else
 	{
+		//добавь более понятную подсказку для пользователя
 		m_output << "Invalid parametrs\n";
 	}
 	return true;
@@ -65,7 +66,7 @@ bool CShapeStorage::AddCircle(std::istream& args)
 	if (!args.fail())
 	{
 		auto circle = std::make_shared<CCircle>(centr, radius, outlineColor, fillColor);
-		m_shapeStorage.emplace_back(std::move(circle));
+		m_shapeStorage.push_back(circle);
 		m_output << "Circle added"
 				 << "\n";
 	}
@@ -84,7 +85,7 @@ bool CShapeStorage::AddTriangle(std::istream& args)
 	if (!args.fail())
 	{
 		auto triangle = std::make_shared<CTriangle>(p1, p2, p3, outlineColor, fillColor);
-		m_shapeStorage.emplace_back(std::move(triangle));
+		m_shapeStorage.push_back(triangle);
 		m_output << "Triangle added"
 				 << "\n";
 	}
@@ -95,6 +96,7 @@ bool CShapeStorage::AddTriangle(std::istream& args)
 	return true;
 }
 
+//можно выделить фабрику 
 bool CShapeStorage::AddLine(std::istream& args)
 {
 	CPoint startPoint;
@@ -104,7 +106,7 @@ bool CShapeStorage::AddLine(std::istream& args)
 	if (!args.fail())
 	{
 		auto line = std::make_shared<CLineSegment>(startPoint, endPoint, outlineColor);
-		m_shapeStorage.emplace_back(std::move(line));
+		m_shapeStorage.push_back(line);
 		m_output << "Line segment added"
 				 << "\n";
 	}
@@ -115,38 +117,42 @@ bool CShapeStorage::AddLine(std::istream& args)
 	return true;
 }
 
-void CShapeStorage::GetMaxAreaShape() const
+std::string CShapeStorage::GetMaxAreaShape() const
 {
 	if (m_shapeStorage.empty())
 	{
-		std::cout << "Storage is empty\n";
-		return;
+		return "Storage is empty\n";
 	}
 	auto maxAreaShape = m_shapeStorage[0];
 	for (auto& shape : m_shapeStorage)
 	{
 		maxAreaShape = maxAreaShape->GetArea() > shape->GetArea() ? maxAreaShape : shape;
 	}
-	std::cout << maxAreaShape->ToString() << "\n"
-			  << "Outline color = " << maxAreaShape->GetOutlineColor() << "\n"
-			  << "Area = " << maxAreaShape->GetArea() << ", "
-			  << "Perimetr = " << maxAreaShape->GetPerimetr() << "\n";
+	// 1. логику с получением строки с площадью и периметром можно перенести
+	// в toString родительского класса
+
+	// 2.(проще) можно в main возвращать фигуру а собирать сроку будет код который его печатает
+	return maxAreaShape->ToString()
+		+ "\n" + "Outline color = "
+		+ std::to_string(maxAreaShape->GetOutlineColor()) + "\n"
+		+ "Area = " + std::to_string(maxAreaShape->GetArea())
+		+ ", " + "Perimetr = " + std::to_string(maxAreaShape->GetPerimetr()) + "\n";
 }
 
-void CShapeStorage::GetMinPerimetrShape() const
+std::string CShapeStorage::GetMinPerimetrShape() const
 {
 	if (m_shapeStorage.empty())
 	{
-		std::cout << "Storage is empty\n";
-		return;
+		return "Storage is empty\n";
 	}
 	auto minPerimetrShape = m_shapeStorage[0];
 	for (auto& shape : m_shapeStorage)
 	{
 		minPerimetrShape = minPerimetrShape->GetPerimetr() > shape->GetPerimetr() ? shape : minPerimetrShape;
 	}
-	std::cout << minPerimetrShape->ToString() << "\n"
-			  << "Outline color = " << minPerimetrShape->GetOutlineColor() << "\n"
-			  << "Area = " << minPerimetrShape->GetArea() << ", "
-			  << "Perimetr = " << minPerimetrShape->GetPerimetr() << "\n";
+	return minPerimetrShape->ToString() 
+		+ "\n" + "Outline color = " 
+		+ std::to_string(minPerimetrShape->GetOutlineColor()) + "\n"
+		 + "Area = " + std::to_string(minPerimetrShape->GetArea()) 
+		+ ", " + "Perimetr = " + std::to_string(minPerimetrShape->GetPerimetr()) + "\n";
 }

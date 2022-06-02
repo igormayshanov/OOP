@@ -20,9 +20,9 @@ int main()
 			cout << "Unknown command!" << endl;
 		}
 	}
-	cout << "Max area shape:\n";
-	shapes.GetMaxAreaShape();
-	cout << "Min perimetr shape:\n";
-	shapes.GetMinPerimetrShape();
+	cout << "Max area shape:\n"
+		 << shapes.GetMaxAreaShape() << "\n";
+	cout << "Min perimetr shape:\n"
+		 << shapes.GetMinPerimetrShape() << "\n";
 	return 0;
 }

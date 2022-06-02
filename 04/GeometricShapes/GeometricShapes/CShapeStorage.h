@@ -8,8 +8,8 @@ public:
 	~CShapeStorage(){};
 	CShapeStorage(std::istream& input, std::ostream& output);
 	bool HandleCommand();
-	void GetMaxAreaShape() const;
-	void GetMinPerimetrShape() const;
+	std::string GetMaxAreaShape() const;
+	std::string GetMinPerimetrShape() const;
 
 	// Избавляемся от предупреждения компилятора о том, что он не сможет сгенерировать оператор присваивания
 private:

@@ -24,7 +24,7 @@ std::string CCircle::ToString()
 	return "Circle, centr = " 
 		+ std::to_string(GetCenter().m_x)
 		+ ", " + std::to_string(GetCenter().m_y)
-		+ ", radius = " + std::to_string(GetRadius());
+		+ ", radius = " + std::to_string(GetRadius()) + ", fill color = " + std::to_string(GetFillColor());
 }
 
 uint32_t CCircle::GetOutlineColor()
