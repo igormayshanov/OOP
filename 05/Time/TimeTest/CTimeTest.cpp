@@ -184,8 +184,8 @@ BOOST_FIXTURE_TEST_SUITE(increment_max_argument, CTimeFixtureMaxSec)
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
-BOOST_FIXTURE_TEST_SUITE(plus_minus_operator, CTimeFixtureOneArg)
-	BOOST_AUTO_TEST_CASE(binary_plus_1000sec_whith_1_equal_0h_16min_41sec)
+BOOST_FIXTURE_TEST_SUITE(binary_operators, CTimeFixtureOneArg)
+	BOOST_AUTO_TEST_CASE(_1000sec_plus_1_equal_0h_16min_41sec)
 	{
 		CTime time1(1);
 		CTime result = time + time1;
@@ -193,7 +193,7 @@ BOOST_FIXTURE_TEST_SUITE(plus_minus_operator, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(result.GetMinutes(), 16);
 		BOOST_CHECK_EQUAL(result.GetHours(), 0);
 	}
-	BOOST_AUTO_TEST_CASE(binary_reduced_plus_1000sec_whith_1_equal_0h_16min_41sec)
+	BOOST_AUTO_TEST_CASE(reduced_plus_1000sec_whith_1_equal_0h_16min_41sec)
 	{
 		CTime time1(1);
 		time += time1;
@@ -201,7 +201,7 @@ BOOST_FIXTURE_TEST_SUITE(plus_minus_operator, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(time.GetMinutes(), 16);
 		BOOST_CHECK_EQUAL(time.GetHours(), 0);
 	}
-	BOOST_AUTO_TEST_CASE(binary_minus_1000sec_minus_1_equal_0h_16min_39sec)
+	BOOST_AUTO_TEST_CASE(_1000sec_minus_1_equal_0h_16min_39sec)
 	{
 		CTime time1(1);
 		CTime result = time - time1;
@@ -209,7 +209,7 @@ BOOST_FIXTURE_TEST_SUITE(plus_minus_operator, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(result.GetMinutes(), 16);
 		BOOST_CHECK_EQUAL(result.GetHours(), 0);
 	}
-	BOOST_AUTO_TEST_CASE(binary_reduced_minus_1000sec_minus_1_equal_0h_16min_39sec)
+	BOOST_AUTO_TEST_CASE(_reduced_minus_1000sec_minus_1_equal_0h_16min_39sec)
 	{
 		CTime time1(1);
 		time -= time1;
@@ -217,7 +217,7 @@ BOOST_FIXTURE_TEST_SUITE(plus_minus_operator, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(time.GetMinutes(), 16);
 		BOOST_CHECK_EQUAL(time.GetHours(), 0);
 	}
-	BOOST_AUTO_TEST_CASE(binary_plus_1000sec_plus_85401_equal_0h_0min_0sec)
+	BOOST_AUTO_TEST_CASE(_1000sec_plus_85401_equal_0h_0min_0sec)
 	{
 		CTime time1(85401);
 		CTime result = time + time1;
@@ -225,7 +225,7 @@ BOOST_FIXTURE_TEST_SUITE(plus_minus_operator, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
 		BOOST_CHECK_EQUAL(result.GetHours(), 0);
 	}
-	BOOST_AUTO_TEST_CASE(binary_minus_1000sec_minus_1001_equal_0h_0min_1sec)
+	BOOST_AUTO_TEST_CASE(_minus_1000sec_minus_1001_equal_0h_0min_1sec)
 	{
 		CTime time1(1001);
 		CTime result = time - time1;
@@ -233,7 +233,7 @@ BOOST_FIXTURE_TEST_SUITE(plus_minus_operator, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
 		BOOST_CHECK_EQUAL(result.GetHours(), 0);
 	}
-	BOOST_AUTO_TEST_CASE(binary_reduced_plus_1000sec_plus_85401_equal_0h_0min_0sec)
+	BOOST_AUTO_TEST_CASE(_reduced_plus_1000sec_plus_85401_equal_0h_0min_0sec)
 	{
 		CTime time1(85401);
 		time += time1;
@@ -241,12 +241,40 @@ BOOST_FIXTURE_TEST_SUITE(plus_minus_operator, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(time.GetMinutes(), 0);
 		BOOST_CHECK_EQUAL(time.GetHours(), 0);
 	}
-	BOOST_AUTO_TEST_CASE(binary_reduced_minus_1000sec_minus_1001_equal_0h_0min_1sec)
+	BOOST_AUTO_TEST_CASE(_reduced_minus_1000sec_minus_1001_equal_0h_0min_1sec)
 	{
 		CTime time1(1001);
 		time -= time1;
 		BOOST_CHECK_EQUAL(time.GetSeconds(), 1);
 		BOOST_CHECK_EQUAL(time.GetMinutes(), 0);
 		BOOST_CHECK_EQUAL(time.GetHours(), 0);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_multiply_3_equal_0h_50min_0sec)
+	{
+		CTime result = time * 3;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 50);
+		BOOST_CHECK_EQUAL(result.GetHours(), 0);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_multiply_90_equal_1h_00min_00sec)
+	{
+		CTime result = time * 90;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
+		BOOST_CHECK_EQUAL(result.GetHours(), 1);
+	}
+	BOOST_AUTO_TEST_CASE(_3_multiply_1000sec_equal_0h_50min_0sec)
+	{
+		CTime result = 3 * time;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 50);
+		BOOST_CHECK_EQUAL(result.GetHours(), 0);
+	}
+	BOOST_AUTO_TEST_CASE(_90_multiply_1000sec_equal_1h_00min_00sec)
+	{
+		CTime result = 90 * time;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
+		BOOST_CHECK_EQUAL(result.GetHours(), 1);
 	}
 BOOST_AUTO_TEST_SUITE_END()

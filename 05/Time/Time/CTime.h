@@ -28,8 +28,11 @@ public:
 	CTime& operator-(CTime const& time);
 	CTime& operator+=(CTime const& time);
 	CTime& operator-=(CTime const& time);
+	CTime& operator*(int const factor);
 
 private:
 	const unsigned MAX_SECONDS = 86399;
 	unsigned m_timeStamp;
 };
+
+CTime& operator*(int const factor, CTime& time);

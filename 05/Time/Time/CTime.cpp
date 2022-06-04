@@ -77,7 +77,7 @@ CTime CTime::operator--(int)
 CTime& CTime::operator+(CTime const& time)
 {
 	auto temp = m_timeStamp + time.m_timeStamp;
-	m_timeStamp = temp > MAX_SECONDS ? temp - MAX_SECONDS - 1 : temp;
+	m_timeStamp = temp > MAX_SECONDS ? (temp % MAX_SECONDS) - 1 : temp;
 	return *this;
 }
 
@@ -95,4 +95,16 @@ CTime& CTime::operator+=(CTime const& time)
 CTime& CTime::operator-=(CTime const& time)
 {
 	return *this - time;
+}
+
+CTime& CTime::operator*(int const factor)
+{
+	auto temp = m_timeStamp * factor;
+	m_timeStamp = temp > MAX_SECONDS ? (temp % MAX_SECONDS) - 1 : temp;
+	return *this;
+}
+
+CTime& operator*(int const factor, CTime& time)
+{
+	return time * factor;
 }
