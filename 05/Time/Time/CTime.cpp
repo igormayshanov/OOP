@@ -196,3 +196,22 @@ bool CTime::operator!=(CTime const& other) const
 {
 	return !(*this == other);
 }
+
+bool CTime::operator>(CTime const& other) const
+{
+	return m_timeStamp > other.m_timeStamp;
+}
+
+bool CTime::operator<(CTime const& other) const
+{
+	return m_timeStamp < other.m_timeStamp;
+}
+
+bool CTime::operator>=(CTime const& other) const
+{
+	return !(*this < other);
+}
+bool CTime::operator<=(CTime const& other) const
+{
+	return !(*this > other);
+}

@@ -414,4 +414,39 @@ BOOST_FIXTURE_TEST_SUITE(comparison_operators, CTimeFixture)
 		CTime time1(3, 2, 1);
 		BOOST_CHECK(time != time1);
 	}
+	BOOST_AUTO_TEST_CASE(_1h_2min_3sec_less_than_3h_2min_1sec)
+	{
+		CTime time1(3, 2, 1);
+		BOOST_CHECK(time < time1);
+	}
+	BOOST_AUTO_TEST_CASE(_1h_2min_3sec_more_than_1h_1min_1sec)
+	{
+		CTime time1(1, 1, 1);
+		BOOST_CHECK(time > time1);
+	}
+	BOOST_AUTO_TEST_CASE(_1h_2min_3sec_more_than_or_equal_1h_2min_3sec)
+	{
+		CTime time1(1, 2, 3);
+		BOOST_CHECK(time >= time1);
+	}
+	BOOST_AUTO_TEST_CASE(_1h_2min_3sec_more_than_or_equal_1h_2min_2sec)
+	{
+		CTime time1(1, 2, 2);
+		BOOST_CHECK(time >= time1);
+	}
+	BOOST_AUTO_TEST_CASE(_1h_2min_3sec_less_than_or_equal_1h_2min_3sec)
+	{
+		CTime time1(1, 2, 3);
+		BOOST_CHECK(time <= time1);
+	}
+	BOOST_AUTO_TEST_CASE(_1h_2min_3sec_less_than_or_equal_1h_2min_4sec)
+	{
+		CTime time1(1, 2, 4);
+		BOOST_CHECK(time <= time1);
+	}
+	BOOST_AUTO_TEST_CASE(_1h_2min_3sec_less_than_or_equal_1h_2min_2sec)
+	{
+		CTime time1(1, 2, 2);
+		BOOST_CHECK(!(time <= time1));
+	}
 BOOST_AUTO_TEST_SUITE_END()

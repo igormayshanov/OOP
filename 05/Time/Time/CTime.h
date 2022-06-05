@@ -37,8 +37,10 @@ public:
 	friend std::istream& operator>>(std::istream& stream, CTime& time);
 	bool operator==(CTime const& other) const;
 	bool operator!=(CTime const& other) const;
-
-
+	bool operator>(CTime const& other) const;
+	bool operator<(CTime const& other) const;
+	bool operator>=(CTime const& other) const;
+	bool operator<=(CTime const& other) const;
 
 private:
 	const unsigned MAX_SECONDS = 86399;
