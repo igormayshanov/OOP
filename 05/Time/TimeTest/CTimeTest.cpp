@@ -256,13 +256,26 @@ BOOST_FIXTURE_TEST_SUITE(binary_operators, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(result.GetMinutes(), 50);
 		BOOST_CHECK_EQUAL(result.GetHours(), 0);
 	}
-	BOOST_AUTO_TEST_CASE(_1000sec_multiply_minus_3_equal_0h_50min_0sec)
+	BOOST_AUTO_TEST_CASE(_1000sec_multiply_minus_3_equal_23h_10min_0sec)
 	{
 		CTime result = time * -3;
 		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
 		BOOST_CHECK_EQUAL(result.GetMinutes(), 10);
 		BOOST_CHECK_EQUAL(result.GetHours(), 23);
-
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_multiply_minus_90_equal_23h_0min_0sec)
+	{
+		CTime result = time * -90;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
+		BOOST_CHECK_EQUAL(result.GetHours(), 23);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_reduced_multiply_minus_90_equal_23h_0min_0sec)
+	{
+		time *= -90;
+		BOOST_CHECK_EQUAL(time.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(time.GetMinutes(), 0);
+		BOOST_CHECK_EQUAL(time.GetHours(), 23);
 	}
 	BOOST_AUTO_TEST_CASE(_1000sec_multiply_90_equal_1h_00min_00sec)
 	{
@@ -344,5 +357,61 @@ BOOST_FIXTURE_TEST_SUITE(binary_operators, CTimeFixtureOneArg)
 	{
 		CTime divisor(0);
 		BOOST_CHECK_THROW(CTime result = time / divisor, std::invalid_argument);
+	}
+
+BOOST_AUTO_TEST_SUITE_END()
+
+BOOST_AUTO_TEST_CASE(_1sec_multiply_minus_1_equal_23h_59min_59sec)
+{
+	CTime result = CTime(1) * -1;
+	BOOST_CHECK_EQUAL(result.GetSeconds(), 59);
+	BOOST_CHECK_EQUAL(result.GetMinutes(), 59);
+	BOOST_CHECK_EQUAL(result.GetHours(), 23);
+}
+
+BOOST_AUTO_TEST_CASE(_432sec_multiply_minus_1000_equal_0h_0min_0sec)
+{
+	CTime result = CTime(432) * -1000;
+	BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+	BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
+	BOOST_CHECK_EQUAL(result.GetHours(), 0);
+}
+
+BOOST_AUTO_TEST_CASE(_0sec_division_by_5_equal_0h_0min_0sec)
+{
+	CTime result = CTime(0) / -5;
+	BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+	BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
+	BOOST_CHECK_EQUAL(result.GetHours(), 0);
+}
+
+BOOST_AUTO_TEST_CASE(_1h_2min_3sec_output_to_output_stream_must_be_1h_2min_3sec)
+{
+	CTime time(1, 2, 3);
+	std::ostringstream stringStream;
+	stringStream << time;
+	BOOST_CHECK_EQUAL(stringStream.str(), "1:2:3");
+}
+
+BOOST_AUTO_TEST_CASE(_1h_2min_3sec_to_input_stream_must_be_1h_2min_3sec)
+{
+	CTime time(0);
+	std::istringstream input("1:2:3");
+	input >> time;
+	BOOST_CHECK_EQUAL(time.GetHours(), 1);
+	BOOST_CHECK_EQUAL(time.GetMinutes(), 2);
+	BOOST_CHECK_EQUAL(time.GetSeconds(), 3);
+}
+
+BOOST_FIXTURE_TEST_SUITE(comparison_operators, CTimeFixture)
+	BOOST_AUTO_TEST_CASE(_1h_2min_3sec_equal_with_1h_2min_3sec)
+	{
+		CTime time1(1, 2, 3);
+		BOOST_CHECK(time == time1);
+	}
+	BOOST_AUTO_TEST_CASE(_1h_2min_3sec_not_equal_with_3h_2min_1sec)
+	{
+		CTime time1(3, 2, 1);
+		BOOST_CHECK(time != time1);
 	}
 BOOST_AUTO_TEST_SUITE_END()

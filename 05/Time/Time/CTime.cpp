@@ -24,10 +24,20 @@ CTime::CTime(unsigned hours, unsigned minutes, unsigned seconds)
 		throw;
 	}
 }
+
+CTime::CTime(const CTime& refTime)
+{
+	m_timeStamp = refTime.m_timeStamp;
+}
+
 // инициализирует время количеством секунд после полуночи
 CTime::CTime(unsigned timeStamp)
 	: m_timeStamp(timeStamp)
 {
+	if (timeStamp > MAX_SECONDS || timeStamp < 0)
+	{
+		throw std::out_of_range("Argument must be from 0 to 86400");
+	}
 }
 
 // возвращает количество часов
@@ -77,14 +87,14 @@ CTime CTime::operator--(int)
 CTime CTime::operator+(CTime const& time)
 {
 	auto temp = m_timeStamp + time.m_timeStamp;
-	temp = temp > MAX_SECONDS ? (temp % MAX_SECONDS) - 1 : temp;
+	temp = temp > MAX_SECONDS ? (temp % (MAX_SECONDS + 1)) : temp;
 	return CTime(temp);
 }
 
 CTime& CTime::operator+=(CTime const& time)
 {
-	m_timeStamp += time.m_timeStamp;
-	m_timeStamp = m_timeStamp > MAX_SECONDS ? (m_timeStamp % MAX_SECONDS) - 1 : m_timeStamp;
+	CTime temp = *this + time.m_timeStamp;
+	this->m_timeStamp = temp.m_timeStamp;
 	return *this;
 }
 
@@ -105,17 +115,24 @@ CTime CTime::operator*(int const factor)
 	auto temp = static_cast<int>(m_timeStamp * factor);
 	if (factor < 0)
 	{
-		auto result = std::abs(temp) % MAX_SECONDS;
-		result = MAX_SECONDS - result + 1;
+		auto result = std::abs(temp) % (MAX_SECONDS + 1);
+		result = result == 0 ? 0 : MAX_SECONDS - result + 1;
 		return CTime(result);
 	}
-	temp = temp > MAX_SECONDS ? (temp % MAX_SECONDS) - 1 : temp;
+	temp = temp > MAX_SECONDS ? (temp % (MAX_SECONDS + 1)) : temp;
 	return CTime(temp);
 }
 
 CTime operator*(int const factor, CTime& time)
 {
 	return CTime(time * factor);
+}
+
+CTime& CTime::operator*=(int const& factor)
+{
+	CTime temp = *this * factor;
+	this->m_timeStamp = temp.m_timeStamp;
+	return *this;
 }
 
 CTime CTime::operator/(int const divisor)
@@ -128,7 +145,7 @@ CTime CTime::operator/(int const divisor)
 	if (divisor < 0)
 	{
 		auto result = std::abs(temp) % MAX_SECONDS;
-		result = MAX_SECONDS - result + 1;
+		result = result == 0 ? 0 : MAX_SECONDS - result + 1;
 		return CTime(result);
 	}
 	return CTime(m_timeStamp / divisor);
@@ -139,14 +156,43 @@ CTime CTime::operator/(CTime const& divisor)
 	return CTime(*this / divisor.m_timeStamp);
 }
 
-CTime& CTime::operator*=(int const& factor)
+CTime& CTime::operator/=(int const divisor)
 {
-	m_timeStamp *= factor;
+	CTime temp = *this / divisor;
+	this->m_timeStamp = temp.m_timeStamp;
 	return *this;
 }
 
-CTime& CTime::operator/=(int const divisor)
+std::ostream& operator<<(std::ostream& stream, CTime const& time)
 {
-	m_timeStamp /= divisor;
-	return *this;
+	stream << time.GetHours() << ":" << time.GetMinutes() << ":" << time.GetSeconds();
+	return stream;
+}
+
+std::istream& operator>>(std::istream& stream, CTime& time)
+{
+	unsigned hours = 0;
+	unsigned minutes = 0;
+	unsigned seconds = 0;
+	if ((stream >> hours) && (stream.get() == ':') && (stream >> minutes) && (stream.get() == ':')
+		&& (stream >> seconds))
+	{
+		CTime temp(hours, minutes, seconds);
+		time.m_timeStamp = temp.m_timeStamp;
+	}
+	else
+	{
+		stream.setstate(std::ios_base::failbit | stream.rdstate());
+	}
+	return stream;
+}
+
+bool CTime::operator==(CTime const& other) const
+{
+	return m_timeStamp == other.m_timeStamp;
+}
+
+bool CTime::operator!=(CTime const& other) const
+{
+	return !(*this == other);
 }

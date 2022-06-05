@@ -7,6 +7,7 @@ class CTime
 public:
 	// инициализирует время заданным количеством часов, минут и секунд
 	CTime(unsigned hours, unsigned minutes, unsigned seconds = 0);
+	CTime(const CTime& refTime);
 
 	// инициализирует время количеством секунд после полуночи
 	CTime(unsigned timeStamp = 0);
@@ -33,6 +34,11 @@ public:
 	CTime operator/(int const divisor);
 	CTime operator/(CTime const& divisor);
 	CTime& operator/=(int const divisor);
+	friend std::istream& operator>>(std::istream& stream, CTime& time);
+	bool operator==(CTime const& other) const;
+	bool operator!=(CTime const& other) const;
+
+
 
 private:
 	const unsigned MAX_SECONDS = 86399;
@@ -40,3 +46,5 @@ private:
 };
 
 CTime operator*(int const factor, CTime& time);
+
+std::ostream& operator<<(std::ostream& stream, CTime const& time);
