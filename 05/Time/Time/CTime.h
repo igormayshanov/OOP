@@ -24,15 +24,19 @@ public:
 	CTime operator++(int);
 	CTime& operator--();
 	CTime operator--(int);
-	CTime& operator+(CTime const& time);
-	CTime& operator-(CTime const& time);
+	CTime operator+(CTime const& time);
+	CTime operator-(CTime const& time);
 	CTime& operator+=(CTime const& time);
 	CTime& operator-=(CTime const& time);
-	CTime& operator*(int const factor);
+	CTime operator*(int const factor);
+	CTime& operator*=(int const& factor);
+	CTime operator/(int const divisor);
+	CTime operator/(CTime const& divisor);
+	CTime& operator/=(int const divisor);
 
 private:
 	const unsigned MAX_SECONDS = 86399;
 	unsigned m_timeStamp;
 };
 
-CTime& operator*(int const factor, CTime& time);
+CTime operator*(int const factor, CTime& time);

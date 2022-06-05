@@ -256,6 +256,14 @@ BOOST_FIXTURE_TEST_SUITE(binary_operators, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(result.GetMinutes(), 50);
 		BOOST_CHECK_EQUAL(result.GetHours(), 0);
 	}
+	BOOST_AUTO_TEST_CASE(_1000sec_multiply_minus_3_equal_0h_50min_0sec)
+	{
+		CTime result = time * -3;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 10);
+		BOOST_CHECK_EQUAL(result.GetHours(), 23);
+
+	}
 	BOOST_AUTO_TEST_CASE(_1000sec_multiply_90_equal_1h_00min_00sec)
 	{
 		CTime result = time * 90;
@@ -276,5 +284,65 @@ BOOST_FIXTURE_TEST_SUITE(binary_operators, CTimeFixtureOneArg)
 		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
 		BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
 		BOOST_CHECK_EQUAL(result.GetHours(), 1);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_reduced_multiply_3_equal_0h_50min_0sec)
+	{
+		time *= 3;
+		BOOST_CHECK_EQUAL(time.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(time.GetMinutes(), 50);
+		BOOST_CHECK_EQUAL(time.GetHours(), 0);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_reduced_multiply_90_equal_1h_00min_00sec)
+	{
+		time *= 90;
+		BOOST_CHECK_EQUAL(time.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(time.GetMinutes(), 0);
+		BOOST_CHECK_EQUAL(time.GetHours(), 1);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_reduced_multiply_0_equal_0h_00min_00sec)
+	{
+		time *= 0;
+		BOOST_CHECK_EQUAL(time.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(time.GetMinutes(), 0);
+		BOOST_CHECK_EQUAL(time.GetHours(), 0);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_divided_by_5_equal_0h_3min_20sec)
+	{
+		CTime result = time / 5;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 20);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 3);
+		BOOST_CHECK_EQUAL(result.GetHours(), 0);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_divided_by_2000_equal_0h_0min_0sec)
+	{
+		CTime result = time / 2000;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
+		BOOST_CHECK_EQUAL(result.GetHours(), 0);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_divided_by_0_must_throw_exception_division_by_zero)
+	{
+		BOOST_CHECK_THROW(CTime result = time / 0, std::invalid_argument);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_divided_by_200sec_equal_0h_0min_5sec)
+	{
+		CTime divisor(200);
+		CTime result = time / divisor;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 5);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
+		BOOST_CHECK_EQUAL(result.GetHours(), 0);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_divided_by_2000sec_equal_0h_0min_0sec)
+	{
+		CTime divisor(2000);
+		CTime result = time / divisor;
+		BOOST_CHECK_EQUAL(result.GetSeconds(), 0);
+		BOOST_CHECK_EQUAL(result.GetMinutes(), 0);
+		BOOST_CHECK_EQUAL(result.GetHours(), 0);
+	}
+	BOOST_AUTO_TEST_CASE(_1000sec_divided_by_0sec_must_throw_exception)
+	{
+		CTime divisor(0);
+		BOOST_CHECK_THROW(CTime result = time / divisor, std::invalid_argument);
 	}
 BOOST_AUTO_TEST_SUITE_END()
