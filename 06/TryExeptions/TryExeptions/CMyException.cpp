@@ -1,0 +1,1 @@
+#include "CMyException.h"
