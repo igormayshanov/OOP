@@ -11,7 +11,6 @@ class CStringStack
 			, pNext(next)
 		{
 		}
-
 		~Node()
 		{
 			std::cout << "Node destroyed " << value << "\n ";
@@ -24,6 +23,9 @@ class CStringStack
 	NodePtr m_pTop;
 
 public:
+	CStringStack();
+	CStringStack(CStringStack const& other) noexcept;
+	CStringStack(CStringStack&& other) noexcept;
 
 		~CStringStack()
 	{
@@ -35,5 +37,7 @@ public:
 	bool IsEmpty() const;
 	std::string& Top() const;
 	void Print(std::ostream& stream);
-	void Erase();
+	void Clear();
+	CStringStack& operator=(CStringStack const& other) noexcept;
+	CStringStack& operator=(CStringStack&& other) noexcept;
 };

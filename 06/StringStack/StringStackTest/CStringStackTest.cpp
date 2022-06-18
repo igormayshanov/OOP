@@ -11,7 +11,16 @@ struct CStringStackEmpty
 	{
 	}
 	CStringStack stack;
+	std::stringstream stream;
+	std::stringstream comparisonStream;
 };
+
+void InitStackThreeElems(CStringStack& stack)
+{
+	stack.Push("ONE");
+	stack.Push("TWO");
+	stack.Push("THREE");
+}
 
 BOOST_FIXTURE_TEST_SUITE(Stack, CStringStackEmpty)
 
@@ -33,22 +42,73 @@ BOOST_FIXTURE_TEST_SUITE(Stack, CStringStackEmpty)
 	}
 	BOOST_AUTO_TEST_CASE(print_element_from_stack_with_tree_elements_TREE_TWO_ONE)
 	{
-		stack.Push("ONE");
-		stack.Push("TWO");
-		stack.Push("THREE");
-		std::stringstream stream;
-		std::stringstream comparisonOutputStream;
-		comparisonOutputStream << "THREE\nTWO\nONE\n";
+		InitStackThreeElems(stack);
+		comparisonStream << "THREE\nTWO\nONE\n";
 		stack.Print(stream);
 		BOOST_CHECK_EQUAL(stack.Top(), "THREE");
-		BOOST_CHECK_EQUAL(stream.str(), comparisonOutputStream.str());
+		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
 	}
-	BOOST_AUTO_TEST_CASE(erase_stack_with_tree_elements_TREE_TWO_ONE)
+	BOOST_AUTO_TEST_CASE(clear_stack_with_tree_elements_TREE_TWO_ONE_stack_must_be_empty)
 	{
-		stack.Push("ONE");
-		stack.Push("TWO");
-		stack.Push("THREE");
-		stack.Erase();
+		InitStackThreeElems(stack);
+		stack.Clear();
 		BOOST_CHECK(stack.IsEmpty());
+	}
+	BOOST_AUTO_TEST_CASE(copy_stack_with_tree_elements_TREE_TWO_ONE_to_stack2_stack_must_be_equal_stack2)
+	{
+		InitStackThreeElems(stack);
+		CStringStack stack2 = stack;
+		stack2.Print(stream);
+		stack.Print(comparisonStream);
+		BOOST_CHECK_EQUAL(stack2.Top(), "THREE");
+		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
+	}
+	BOOST_AUTO_TEST_CASE(copy_stack_with_tree_elements_delete_original_stack_the_copied_object_must_not_destroy)
+	{
+		InitStackThreeElems(stack);
+		CStringStack stack2 = stack;
+		stack.Clear();
+		comparisonStream << "THREE\nTWO\nONE\n";
+		stack2.Print(stream);
+		BOOST_CHECK(stack.IsEmpty());
+		BOOST_CHECK(!stack2.IsEmpty());
+		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
+	}
+	BOOST_AUTO_TEST_CASE(move_stack_with_tree_elements_original_stack_must_be_destroyed)
+	{
+		InitStackThreeElems(stack);
+		CStringStack stack2 = std::move(stack);
+		comparisonStream << "THREE\nTWO\nONE\n";
+		stack2.Print(stream);
+		BOOST_CHECK(stack.IsEmpty());
+		BOOST_CHECK(!stack2.IsEmpty());
+		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
+	}
+BOOST_AUTO_TEST_SUITE_END()
+
+template <typename Ex, typename Fn>
+void ExpectException(Fn&& fn, const string& expectedDescription)
+{
+	// Проверяем, что вызов fn() выбросит исключение типа Ex
+	// с описанием, равным expectedDescription
+	BOOST_CHECK_EXCEPTION(fn(), Ex, [&](const Ex& e) {
+		return e.what() == expectedDescription;
+	});
+}
+
+BOOST_FIXTURE_TEST_SUITE(TestStackExeptions, CStringStackEmpty)
+	BOOST_AUTO_TEST_CASE(can_not_remove_an_element_from_an_empty_stack)
+	{
+		ExpectException<logic_error>([&] {
+			stack.Pop();
+		},
+			"Stack is empty");
+	}
+	BOOST_AUTO_TEST_CASE(can_not_take_top_element_from_an_empty_stack)
+	{
+		ExpectException<logic_error>([&] {
+			stack.Top();
+		},
+			"Stack is empty");
 	}
 BOOST_AUTO_TEST_SUITE_END()
