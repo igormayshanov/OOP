@@ -24,15 +24,17 @@ void InitStackThreeElems(CStringStack& stack)
 
 BOOST_FIXTURE_TEST_SUITE(Stack, CStringStackEmpty)
 
-	BOOST_AUTO_TEST_CASE(empty_stack_return)
+	BOOST_AUTO_TEST_CASE(empty_stack_return_empty)
 	{
 		BOOST_CHECK(stack.IsEmpty());
+		BOOST_CHECK_EQUAL(stack.Size(), 0);
 	}
 	BOOST_AUTO_TEST_CASE(push_string_ONE_must_return_from_top_string_ONE)
 	{
 		stack.Push("ONE");
 		BOOST_CHECK(!stack.IsEmpty());
 		BOOST_CHECK_EQUAL(stack.Top(), "ONE");
+		BOOST_CHECK_EQUAL(stack.Size(), 1);
 	}
 	BOOST_AUTO_TEST_CASE(pop_element_from_stack_with_one_element_must_return_empty_stack)
 	{
@@ -61,6 +63,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, CStringStackEmpty)
 		stack2.Print(stream);
 		stack.Print(comparisonStream);
 		BOOST_CHECK_EQUAL(stack2.Top(), "THREE");
+		BOOST_CHECK_EQUAL(stack2.Size(), stack.Size());
 		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
 	}
 	BOOST_AUTO_TEST_CASE(copy_stack_with_tree_elements_delete_original_stack_the_copied_object_must_not_destroy)
@@ -82,8 +85,28 @@ BOOST_FIXTURE_TEST_SUITE(Stack, CStringStackEmpty)
 		stack2.Print(stream);
 		BOOST_CHECK(stack.IsEmpty());
 		BOOST_CHECK(!stack2.IsEmpty());
+		BOOST_CHECK_EQUAL(stack2.Size(), 3);
 		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
 	}
+	BOOST_AUTO_TEST_CASE(test_self_assignment_with_copy_assignment_operator)
+	{
+		InitStackThreeElems(stack);
+		stack = stack;
+		comparisonStream << "THREE\nTWO\nONE\n";
+		stack.Print(stream);
+		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
+		BOOST_CHECK_NO_THROW(stack = stack, exception);
+	}
+	BOOST_AUTO_TEST_CASE(test_self_move_with_move_assignment_operator)
+	{
+		InitStackThreeElems(stack);
+		stack = std::move(stack);
+		comparisonStream << "THREE\nTWO\nONE\n";
+		stack.Print(stream);
+		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
+		BOOST_CHECK_NO_THROW(stack = std::move(stack), exception);
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 template <typename Ex, typename Fn>

@@ -5,6 +5,7 @@ CStringStack::CStringStack()
 
 CStringStack::CStringStack(CStringStack const& other) noexcept
 	: m_pTop(other.m_pTop)
+	, m_size(other.m_size)
 {
 	std::cout << "Creating copy of object StringStack\n";
 }
@@ -24,6 +25,7 @@ bool CStringStack::IsEmpty() const
 void CStringStack::Push(std::string const& value)
 {
 	m_pTop = std::make_shared<Node>(value, m_pTop);
+	m_size++;
 }
 
 void CStringStack::Pop()
@@ -31,6 +33,7 @@ void CStringStack::Pop()
 	if (IsEmpty())
 		throw std::logic_error("Stack is empty");
 	m_pTop = m_pTop->pNext;
+	m_size--;
 }
 
 std::string& CStringStack::Top() const
@@ -56,6 +59,12 @@ void CStringStack::Clear()
 	{
 		m_pTop = m_pTop->pNext;
 	}
+	m_size = 0;
+}
+
+unsigned int CStringStack::Size() const
+{
+	return m_size;
 }
 
 CStringStack& CStringStack::operator=(CStringStack const& other) noexcept
@@ -64,6 +73,7 @@ CStringStack& CStringStack::operator=(CStringStack const& other) noexcept
 	{
 		CStringStack tmpCopy(other);
 		std::swap(m_pTop, tmpCopy.m_pTop);
+		std::swap(m_size, tmpCopy.m_size);
 	}
 	return *this;
 }
@@ -73,6 +83,7 @@ CStringStack& CStringStack::operator=(CStringStack&& other) noexcept
 	if (this != &other)
 	{
 		m_pTop = std::move(other.m_pTop);
+		m_size = std::move(other.m_size);
 	}
 	return *this;
 }

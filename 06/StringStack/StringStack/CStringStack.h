@@ -21,6 +21,7 @@ class CStringStack
 
 	typedef std::shared_ptr<Node> NodePtr;
 	NodePtr m_pTop;
+	unsigned int m_size = 0; 
 
 public:
 	CStringStack();
@@ -35,6 +36,7 @@ public:
 	void Pop();
 	void Push(std::string const& value);
 	bool IsEmpty() const;
+	unsigned int Size() const;
 	std::string& Top() const;
 	void Print(std::ostream& stream);
 	void Clear();
