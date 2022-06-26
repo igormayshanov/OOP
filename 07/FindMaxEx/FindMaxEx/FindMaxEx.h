@@ -9,45 +9,13 @@ struct Sportsman
 	unsigned short weight;
 };
 
-//template <typename T>
-//bool FindMax(std::vector<T> const& arr, T& maxValue)
-//{
-//	if (arr.empty())
-//	{
-//		return false;
-//	}
-//	auto result = std::max_element(arr.begin(), arr.end());
-//	maxValue = *result;
-//	return true;
-//}
-//
-//template <>
-//bool FindMax<const char*>(std::vector<const char*> const& arr,
-//	const char*& maxValue)
-//{
-//	if (arr.empty())
-//	{
-//		return false;
-//	}
-//	auto result = std::max_element(arr.begin(), arr.end(),
-//		[](const char* s1, const char* s2) { return (strcmp(s1, s2) < 0) ? true : false; });
-//	maxValue = *result;
-//	return true;
-//}
-//
-//template <typename T>
-//bool Maximum(T const& a, T const& b)
-//{
-//	return a > b;
-//}
-
 template <class T>
 class CComparator
 {
 public:
 	bool operator()(T const& a, T const& b) const
 	{
-		return a > b;
+		return a < b;
 	}
 };
 
@@ -57,7 +25,7 @@ class CComparator<const char*>
 public:
 	bool operator()(const char* s1, const char* s2) const
 	{
-		return (strcmp(s1, s2) < 0) ? true : false;
+		return strcmp(s1, s2) < 0;
 	}
 };
 
@@ -86,7 +54,17 @@ bool FindMax(std::vector<T> const& arr, T& maxValue, Less const& less)
 	{
 		return false;
 	}
-	auto result = std::max_element(arr.begin(), arr.end(), less);
-	maxValue = *result;
+	//реализовать своими силами
+	auto max = arr.begin();
+	auto i = arr.begin();
+	++i;
+	for (; i != arr.end(); ++i)
+	{
+		if (less(*max, *i))
+		{
+			max = i;
+		}
+	}
+	maxValue = *max;
 	return true;
 }
