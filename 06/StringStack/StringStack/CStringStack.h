@@ -1,6 +1,6 @@
 #pragma once
-#include <memory>
 #include "stdafx.h"
+#include <memory>
 
 class CStringStack
 {
@@ -13,7 +13,6 @@ class CStringStack
 		}
 		~Node()
 		{
-			std::cout << "Node destroyed " << value << "\n ";
 		}
 		std::string value;
 		std::shared_ptr<Node> pNext;
@@ -21,23 +20,24 @@ class CStringStack
 
 	typedef std::shared_ptr<Node> NodePtr;
 	NodePtr m_pTop;
-	unsigned int m_size = 0; 
+	unsigned int m_size = 0;
+	void Copy(CStringStack const& other);
 
 public:
 	CStringStack();
 	CStringStack(CStringStack const& other) noexcept;
 	CStringStack(CStringStack&& other) noexcept;
-
-		~CStringStack()
+	~CStringStack()
 	{
-		std::cout << "Stack is destroyed\n";
+		//от рекурсии перейти к итерации
+		Clear();
 	}
-
 	void Pop();
 	void Push(std::string const& value);
 	bool IsEmpty() const;
 	unsigned int Size() const;
-	std::string& Top() const;
+	std::string& Top() const; //сделать const и не const
+	std::string& Top();
 	void Print(std::ostream& stream);
 	void Clear();
 	CStringStack& operator=(CStringStack const& other) noexcept;

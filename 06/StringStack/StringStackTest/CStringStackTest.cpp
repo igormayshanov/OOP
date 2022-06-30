@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "../StringStack/CStringStack.h"
-#include <math.h>
 
 using namespace std;
 
@@ -65,6 +64,9 @@ BOOST_FIXTURE_TEST_SUITE(Stack, CStringStackEmpty)
 		BOOST_CHECK_EQUAL(stack2.Top(), "THREE");
 		BOOST_CHECK_EQUAL(stack2.Size(), stack.Size());
 		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
+		auto top1 = stack.Top();
+		stack2.Top() = "!!!";
+		BOOST_CHECK_EQUAL(stack.Top(), top1);
 	}
 	BOOST_AUTO_TEST_CASE(copy_stack_with_tree_elements_delete_original_stack_the_copied_object_must_not_destroy)
 	{
@@ -84,6 +86,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, CStringStackEmpty)
 		comparisonStream << "THREE\nTWO\nONE\n";
 		stack2.Print(stream);
 		BOOST_CHECK(stack.IsEmpty());
+		BOOST_CHECK_EQUAL(stack.Size(), 0);
 		BOOST_CHECK(!stack2.IsEmpty());
 		BOOST_CHECK_EQUAL(stack2.Size(), 3);
 		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
@@ -95,7 +98,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, CStringStackEmpty)
 		comparisonStream << "THREE\nTWO\nONE\n";
 		stack.Print(stream);
 		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
-		BOOST_CHECK_NO_THROW(stack = stack, exception);
+		BOOST_CHECK_NO_THROW(stack = stack);
 	}
 	BOOST_AUTO_TEST_CASE(test_self_move_with_move_assignment_operator)
 	{
@@ -104,7 +107,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, CStringStackEmpty)
 		comparisonStream << "THREE\nTWO\nONE\n";
 		stack.Print(stream);
 		BOOST_CHECK_EQUAL(stream.str(), comparisonStream.str());
-		BOOST_CHECK_NO_THROW(stack = std::move(stack), exception);
+		BOOST_CHECK_NO_THROW(stack = std::move(stack));
 	}
 
 BOOST_AUTO_TEST_SUITE_END()
@@ -112,8 +115,6 @@ BOOST_AUTO_TEST_SUITE_END()
 template <typename Ex, typename Fn>
 void ExpectException(Fn&& fn, const string& expectedDescription)
 {
-	// Проверяем, что вызов fn() выбросит исключение типа Ex
-	// с описанием, равным expectedDescription
 	BOOST_CHECK_EXCEPTION(fn(), Ex, [&](const Ex& e) {
 		return e.what() == expectedDescription;
 	});

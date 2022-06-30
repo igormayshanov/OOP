@@ -1,20 +1,41 @@
 #include "CStringStack.h"
+
 CStringStack::CStringStack()
 {
 }
 
 CStringStack::CStringStack(CStringStack const& other) noexcept
-	: m_pTop(other.m_pTop)
-	, m_size(other.m_size)
+	//переделать копирование
+	: m_pTop(nullptr)
+	, m_size(0)
 {
-	std::cout << "Creating copy of object StringStack\n";
+	Copy(other);
 }
 
 CStringStack::CStringStack(CStringStack&& other) noexcept
 	: m_pTop(nullptr)
+	, m_size(0)
 {
 	*this = std::move(other);
-	std::cout << "Move object StringStack\n";
+}
+
+void CStringStack::Copy(CStringStack const& other)
+{
+	NodePtr curr = nullptr;
+	for (auto i = other.m_pTop; i != nullptr; i = i->pNext)
+	{
+		NodePtr item = std::make_shared<Node>(i->value, item);
+		if (m_pTop==nullptr)
+		{
+			m_pTop = item;	
+		}
+		else
+		{
+			curr->pNext = item;
+		}
+		curr = item;
+		++m_size;
+	}
 }
 
 bool CStringStack::IsEmpty() const
@@ -36,16 +57,21 @@ void CStringStack::Pop()
 	m_size--;
 }
 
-std::string& CStringStack::Top() const
+std::string& CStringStack::Top()
 {
 	if (IsEmpty())
 		throw std::logic_error("Stack is empty");
 	return m_pTop->value;
 }
 
+std::string& CStringStack::Top() const
+{
+	return CStringStack::Top();
+}
+
 void CStringStack::Print(std::ostream& stream)
 {
-	NodePtr curr = m_pTop;
+	auto curr = m_pTop;
 	while (curr != nullptr)
 	{
 		stream << curr->value << "\n";
@@ -71,9 +97,7 @@ CStringStack& CStringStack::operator=(CStringStack const& other) noexcept
 {
 	if (this != &other)
 	{
-		CStringStack tmpCopy(other);
-		std::swap(m_pTop, tmpCopy.m_pTop);
-		std::swap(m_size, tmpCopy.m_size);
+		Copy(other);
 	}
 	return *this;
 }
@@ -82,8 +106,9 @@ CStringStack& CStringStack::operator=(CStringStack&& other) noexcept
 {
 	if (this != &other)
 	{
-		m_pTop = std::move(other.m_pTop);
-		m_size = std::move(other.m_size);
+		Copy(other);
+		other.Clear();
+		// size имеет не то значение
 	}
 	return *this;
 }

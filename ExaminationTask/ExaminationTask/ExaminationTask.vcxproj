@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{3a03c305-e47f-4c06-a9b6-3503f1226c1d}</ProjectGuid>
-    <RootNamespace>CAdvansedStudentTest</RootNamespace>
+    <ProjectGuid>{8df86679-d70c-46ee-9fd1-933a98376baa}</ProjectGuid>
+    <RootNamespace>ExaminationTask</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>PeopleTest</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -89,7 +88,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Dell\Documents\IPS\boost_1_78_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,7 +102,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Dell\Documents\IPS\boost_1_78_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +116,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Dell\Documents\IPS\boost_1_78_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,7 +130,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Dell\Documents\IPS\boost_1_78_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,24 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\People\CAdvancedStudent.cpp" />
-    <ClCompile Include="..\People\CPersonImpl.cpp" />
-    <ClCompile Include="..\People\CStudent.cpp" />
-    <ClCompile Include="..\People\CStudentImpl.cpp" />
-    <ClCompile Include="..\People\IPerson.cpp" />
-    <ClCompile Include="..\People\IStudent.cpp" />
-    <ClCompile Include="CAdvancedStudentTest.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="stdafx.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\People\CAdvancedStudent.h" />
-    <ClInclude Include="..\People\CPersonImpl.h" />
-    <ClInclude Include="..\People\CStudent.h" />
-    <ClInclude Include="..\People\CStudentImpl.h" />
-    <ClInclude Include="..\People\IPerson.h" />
-    <ClInclude Include="..\People\IStudent.h" />
-    <ClInclude Include="stdafx.h" />
+    <ClCompile Include="ExaminationTask.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -93,7 +93,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStringStack)
 		comparsionStream << "THREE\nTWO\nONE\n";
 		stack.Print(stream);
 		BOOST_CHECK_EQUAL(stream.str(), comparsionStream.str());
-		BOOST_CHECK_NO_THROW(stack = stack, exception);
+		BOOST_CHECK_NO_THROW(stack = stack);
 	}
 	BOOST_AUTO_TEST_CASE(test_self_move_with_move_assignment_operator)
 	{
@@ -102,7 +102,7 @@ BOOST_FIXTURE_TEST_SUITE(Stack, EmptyStringStack)
 		comparsionStream << "THREE\nTWO\nONE\n";
 		stack.Print(stream);
 		BOOST_CHECK_EQUAL(stream.str(), comparsionStream.str());
-		BOOST_CHECK_NO_THROW(stack = std::move(stack), exception);
+		BOOST_CHECK_NO_THROW(stack = std::move(stack));
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -193,6 +193,10 @@ BOOST_FIXTURE_TEST_SUITE(IntStack, EmptyIntStack)
 		BOOST_CHECK_EQUAL(stack2.Top(), 3);
 		BOOST_CHECK_EQUAL(stack2.Size(), stack.Size());
 		BOOST_CHECK_EQUAL(stream.str(), comparsionStream.str());
+		auto top1 = stack.Top();
+		stack2.Top() = 4;
+		BOOST_CHECK_EQUAL(stack.Top(), top1);
+
 	}
 	BOOST_AUTO_TEST_CASE(copy_stack_with_tree_int_elements_delete_original_stack_the_copied_object_must_not_destroy)
 	{
@@ -223,7 +227,7 @@ BOOST_FIXTURE_TEST_SUITE(IntStack, EmptyIntStack)
 		comparsionStream << "3\n2\n1\n";
 		stack.Print(stream);
 		BOOST_CHECK_EQUAL(stream.str(), comparsionStream.str());
-		BOOST_CHECK_NO_THROW(stack = stack, exception);
+		BOOST_CHECK_NO_THROW(stack = stack);
 	}
 	BOOST_AUTO_TEST_CASE(test_self_move_with_move_assignment_operator_int_stack)
 	{
@@ -232,7 +236,7 @@ BOOST_FIXTURE_TEST_SUITE(IntStack, EmptyIntStack)
 		comparsionStream << "3\n2\n1\n";
 		stack.Print(stream);
 		BOOST_CHECK_EQUAL(stream.str(), comparsionStream.str());
-		BOOST_CHECK_NO_THROW(stack = std::move(stack), exception);
+		BOOST_CHECK_NO_THROW(stack = std::move(stack));
 	}
 BOOST_AUTO_TEST_SUITE_END()
 
@@ -344,7 +348,7 @@ BOOST_FIXTURE_TEST_SUITE(CharStack, EmptyCharArrStack)
 		comparsionStream << "THREE\nTWO\nONE\n";
 		stack.Print(stream);
 		BOOST_CHECK_EQUAL(stream.str(), comparsionStream.str());
-		BOOST_CHECK_NO_THROW(stack = stack, exception);
+		BOOST_CHECK_NO_THROW(stack = stack);
 	}
 	BOOST_AUTO_TEST_CASE(test_self_move_with_move_assignment_operator_char_stack)
 	{
@@ -353,6 +357,6 @@ BOOST_FIXTURE_TEST_SUITE(CharStack, EmptyCharArrStack)
 		comparsionStream << "THREE\nTWO\nONE\n";
 		stack.Print(stream);
 		BOOST_CHECK_EQUAL(stream.str(), comparsionStream.str());
-		BOOST_CHECK_NO_THROW(stack = std::move(stack), exception);
+		BOOST_CHECK_NO_THROW(stack = std::move(stack));
 	}
 BOOST_AUTO_TEST_SUITE_END()

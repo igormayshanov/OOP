@@ -43,7 +43,7 @@ BOOST_FIXTURE_TEST_SUITE(Find_max, FindMaxExFixture)
 	BOOST_AUTO_TEST_CASE(return_max_from_string_array_equal_two)
 	{
 		string max;
-		BOOST_CHECK(FindMax(stringArr, max, CComparator<float>()));
+		BOOST_CHECK(FindMax(stringArr, max, CComparator<string>()));
 		BOOST_CHECK_EQUAL(max, "two");
 	}
 	BOOST_AUTO_TEST_CASE(return_max_from_char_array_equal_two)
@@ -64,5 +64,4 @@ BOOST_FIXTURE_TEST_SUITE(Find_max, FindMaxExFixture)
 		BOOST_CHECK(FindMax(sportsmanArr, max, CHeightComparator()));
 		BOOST_CHECK_EQUAL(max.name, "John");
 	}
-
 BOOST_AUTO_TEST_SUITE_END()
